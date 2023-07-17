@@ -7,6 +7,8 @@
 using namespace std;
 
 int importdata() {
+
+    //data variable store the csv file
     vector<vector<string>> data;  // 2D vector to store CSV data
 
     ifstream file("data.csv");  // Replace "data.csv" with your CSV file name
@@ -15,7 +17,8 @@ int importdata() {
         string line;
         while (getline(file, line)) {
             vector<string> row;  // Vector to store each row of data
-
+            
+            //ss - variable name
             istringstream ss(line);  // Use istringstream to split the line
             string value;
             while (getline(ss, value, ',')) {
@@ -32,7 +35,7 @@ int importdata() {
     }
 
     // Print the data from the array
-    for (const auto& row : data) {
+    for (const auto &row : data) {
         for (const auto& value : row) {
             cout << value << "\t";
         }
