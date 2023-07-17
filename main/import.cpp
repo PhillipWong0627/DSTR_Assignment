@@ -50,11 +50,37 @@ int importdata() {
     // cout << "Value at row 2, column 3: " << value2 << endl;
 
     // Displaying all values in row 1
-    cout << "Values in row 1:" << endl;
-    for (const auto& value : data[1]) {
-        cout << value << "\t";
+    // cout << "Values in row 1:" << endl;
+    // for (const auto& value : data[1]) {
+    //     cout << value << "\t";
+    // }
+    // cout << endl;
+
+    // Assuming you have read the CSV file and stored the data in the 'data' vector
+    string targetName = "100323185";  // Specify the name you want to search for
+
+    bool found = false;  // Flag to check if the name is found
+
+    // Search for the target name and display the matching rows
+    cout << "Rows containing the name '" << targetName << "':" << endl;
+    for (const auto& row : data) {
+        for (const auto& value : row) {
+            if (value == targetName) {
+                // The name is found in this row
+                found = true;
+                for (const auto& val : row) {
+                    cout << val << "\t";
+                }
+                cout << endl;
+                break;
+            }
+        }
     }
-    cout << endl;
+
+    if (!found) {
+        cout << "No rows found with the name '" << targetName << "'." << endl;
+    }
+
 
     return 0;
 }
