@@ -11,6 +11,11 @@ void loginTenant();
 void loginManager();
 void loginAdmin();
 int importdata();
+void tenantMenu();
+void searchTenant();
+void saveFavorite();
+void placeRent();
+void displayHistory();
 
 int main(){
     mainMenu();
@@ -57,17 +62,6 @@ void mainMenu(){
 		else if (choice == 2)
 		{
             loginTenant();
-			// CustomerClass* customerLogin = new CustomerClass;
-			// if (customerLogin->cusLogin(cusHead)) {
-			// 	system("cls");
-			// 	cout << "Login successfully!" << endl;
-			// 	cout << "Welcome back " << customerLogin->getUserName()<<"!" << endl<<endl;
-			// 	cusMenu(customerLogin->getUserName(),head,cusHead, favHead, feedbackHead);
-			// }else {
-			// 	system("cls");
-			// 	cout << "Incorrect username or password!" << endl;
-			// }
-			// delete customerLogin;
 		}
 		else if (choice == 3)
 		{
@@ -90,7 +84,66 @@ void regCustomer(){
 }
 
 void loginTenant(){
-    cout << "loginTenant" << endl;
+    tenantMenu();
+}
+
+void tenantMenu() {
+	// Node* sortedAr;
+	// LinkedList linkedList;
+
+	while (true) {
+		// Node* temp = linkedList.clone(head);
+		int choice;
+		
+		cout << "1. Sort and display property information" << endl;
+		cout << "2. Search and display property details" << endl;
+		cout << "3. Save their favorite property" << endl;
+		cout << "4. Place a rent request the desired property that is stored in the favorite list" << endl;
+		cout << "5. Display property renting history" << endl;
+		cout << "6. Logout" << endl;
+		cout << "Please select: ";
+		cin >> choice;
+		while (cin.fail() || choice < 1 || choice > 6)
+		{
+			system("cls");
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout << "Incorrect input!";
+			cout << endl;
+            cout << "1. Sort and display property information" << endl;
+            cout << "2. Search and display property details" << endl;
+            cout << "3. Save their favorite property" << endl;
+            cout << "4. Place a rent request the desired property that is stored in the favorite list" << endl;
+            cout << "5. Display property renting history" << endl;
+            cout << "6. Logout" << endl;
+            cout << "Please select: ";
+			cin >> choice;
+		}
+		if (choice == 1) {
+            cout << "sortTenant" << endl;
+		}
+		else if (choice == 2) {
+            cout << "searchTenant" << endl;
+		}
+		else if (choice == 3) {
+            cout << "saveFavorite" << endl;
+		}
+		else if (choice == 4) {
+            cout << "placeRent" << endl;
+		}
+		else if (choice == 5) {
+            cout << "displayHistory" << endl;
+		}
+		else if (choice == 6) {
+			system("cls");
+			cout << "Logout successfully!" << endl;
+			return;
+		}
+	}
+}
+
+void sortTenant(){
+    cout << "sortTenant" << endl;
 }
 
 void loginManager(){
