@@ -43,11 +43,18 @@ int importdata() {
     // }
 
     // Accessing values using indices
-    string value1 = data[1][0];  // Value at row 1, column 0
-    string value2 = data[2][3];  // Value at row 2, column 3
+    // string value1 = data[1][0];  // Value at row 1, column 0
+    // string value2 = data[2][3];  // Value at row 2, column 3
 
-    cout << "Value at row 1, column 0: " << value1 << endl;
-    cout << "Value at row 2, column 3: " << value2 << endl;
+    // cout << "Value at row 1, column 0: " << value1 << endl;
+    // cout << "Value at row 2, column 3: " << value2 << endl;
+
+    // Displaying all values in row 1
+    cout << "Values in row 1:" << endl;
+    for (const auto& value : data[1]) {
+        cout << value << "\t";
+    }
+    cout << endl;
 
     return 0;
 }
