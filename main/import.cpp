@@ -35,12 +35,19 @@ int importdata() {
     }
 
     // Print the data from the array
-    for (const auto &row : data) {
-        for (const auto& value : row) {
-            cout << value << "\t";
-        }
-        cout << endl;
-    }
+    // for (const auto &row : data) {
+    //     for (const auto& value : row) {
+    //         cout << value << "\t";
+    //     }
+    //     cout << endl;
+    // }
+
+    // Accessing values using indices
+    string value1 = data[1][0];  // Value at row 1, column 0
+    string value2 = data[2][3];  // Value at row 2, column 3
+
+    cout << "Value at row 1, column 0: " << value1 << endl;
+    cout << "Value at row 2, column 3: " << value2 << endl;
 
     return 0;
 }
