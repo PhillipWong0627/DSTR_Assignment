@@ -78,7 +78,7 @@ int main()
 
 void mainMenu(Node* head,CusNode*& cusHead, AdmNode* admHead, FavNode* favHead, FeedbackNode*& feedbackHead)
 {
-	int choice=NULL;
+	int choice = 0;
 	while (true)
 	{
 		cout << endl;
