@@ -1,0 +1,20 @@
+﻿  AdminClass.cpp
+  BinarySearch.cpp
+  CustomerClass.cpp
+  Input.cpp
+C:\Users\user\Desktop\DSTRAssignment\Assignment\Input.cpp(13,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\user\Desktop\DSTRAssignment\Assignment\Input.cpp(19,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\user\Desktop\DSTRAssignment\Assignment\Input.cpp(55,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\user\Desktop\DSTRAssignment\Assignment\Input.cpp(68,22): warning C4018: '<': signed/unsigned mismatch
+  InsertionSort.cpp
+  LinearSearch.cpp
+  LinkedList.cpp
+  MergeSort.cpp
+  Output.cpp
+  Stack.cpp
+  assignment.cpp
+  Generating Code...
+C:\Users\user\Desktop\DSTRAssignment\Assignment\BinarySearch.cpp(86): warning C4715: 'BinarySearch::binarySearchForFsr': not all control paths return a value
+C:\Users\user\Desktop\DSTRAssignment\Assignment\BinarySearch.cpp(110): warning C4715: 'BinarySearch::binarySearchForEr': not all control paths return a value
+C:\Users\user\Desktop\DSTRAssignment\Assignment\BinarySearch.cpp(59): warning C4715: 'BinarySearch::binarySearchForAr': not all control paths return a value
+  Assignment.vcxproj -> C:\Users\user\Desktop\DSTRAssignment\Debug\Assignment.exe
