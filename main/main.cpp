@@ -1,5 +1,6 @@
 #include <iostream>
 #include <limits>
+#include "import.cpp"
 
 using namespace std;
 
@@ -9,6 +10,7 @@ void regCustomer();
 void loginTenant();
 void loginManager();
 void loginAdmin();
+int importdata();
 
 int main(){
     mainMenu();
@@ -49,7 +51,8 @@ void mainMenu(){
 		
 		if (choice == 1)
 		{
-			regCustomer();
+			// regCustomer();
+            importdata();
 		}
 		else if (choice == 2)
 		{
