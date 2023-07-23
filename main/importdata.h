@@ -8,9 +8,9 @@
 
 using namespace std;
 
-vector<vector<string>> importdata() {
+vector<vector<string> > importdata() {
     //data variable stores the csv file
-    vector<vector<string>> data;  // 2D vector to store CSV data
+    vector<vector<string> > data;  // 2D vector to store CSV data
 
     ifstream file("data.csv");  // Replace "data.csv" with your CSV file name
 

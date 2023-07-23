@@ -224,7 +224,7 @@ void searchPorperty(){
 void searchDetails(int choice){
 
     // Import data from CSV
-    vector<vector<string>> data = importdata();
+    vector<vector<string> > data = importdata();
 
     string targetProperty;
     string result;
@@ -259,7 +259,7 @@ void searchDetails(int choice){
     // Assuming you have read the CSV file and stored the data in the 'data' vector
     string targetName = targetProperty;  // Specify the name you want to search for
 
-    vector<vector<string>> matchingRows;  // Vector to store matching rows
+    vector<vector<string> > matchingRows;  // Vector to store matching rows
 
     // // Search for the target name and store the matching rows
     for (const auto& row : data) {
@@ -288,7 +288,7 @@ void displayPorperty() {
     // DoublyLinkedList<string> favList;
 
     // Import data from CSV
-    vector<vector<string>> data = importdata();
+    vector<vector<string> > data = importdata();
 
     int numEntriesPerPage = 30;
     int currentPage = 1;
@@ -359,12 +359,12 @@ void saveFavorite(){
     // DoublyLinkedList<string> favList;
 
     // // Import data from CSV
-    vector<vector<string>> data = importdata();
+    vector<vector<string> > data = importdata();
 
     // // Assuming you have read the CSV file and stored the data in the 'data' vector
     string targetName = targetProperty;  // Specify the name you want to search for
 
-    vector<vector<string>> matchingRows;  // Vector to store matching rows
+    vector<vector<string> > matchingRows;  // Vector to store matching rows
 
     // // Search for the target name and store the matching rows
     for (const auto& row : data) {
