@@ -2,13 +2,13 @@
 #include <limits>
 #include "importdata.h"
 #include "tenant.h"
+#include "property.h"
 
 using namespace std;
 
 // Function prototypes
 void mainMenu();
 void regCustomer();
-void loginTenant();
 void loginManager();
 void loginAdmin();
 void tenantMenu();
@@ -21,13 +21,17 @@ void placeRent();
 void displayFavorite();
 void rentHistory();
 
+string loginTenant();
+string currentUsername;
 
 // havent know got use or not
 //void displayRent();
 //void printData();
 //void printTable(const std::vector<std::vector<std::string>>& rows);
 
+PropertyList propertyList;
 DoublyLinkedList<string> favList;
+TenantList tenantList;
 
 int main(){
     mainMenu();
@@ -72,7 +76,16 @@ void mainMenu(){
 		}
 		else if (choice == 2)
 		{
-            loginTenant();
+            string loggedInUsername = loginTenant(); // Receive the username from loginTenant function
+            if (!loggedInUsername.empty()) {
+                currentUsername = loggedInUsername; // Store the current username in the global variable
+                cout << "Login successful! Welcome, " << currentUsername << "!" << endl;
+                cout << string(50, '-') << endl;
+                tenantMenu(); // Proceed with tenantMenu or other actions
+            } else {
+                // Handle failed login (e.g., show error message, return to main menu, etc.)
+                cout << "Login failed. Please try again." << endl;
+            }
 		}
 		else if (choice == 3)
 		{
@@ -91,11 +104,29 @@ void mainMenu(){
 }
 
 void regCustomer(){
-    cout << "regCustomer" << endl;
+    string username, password;
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+
+    tenantList.registerTenant(username, password);
+
+    cout << "Registration successful!" << endl;
 }
 
-void loginTenant(){
-    tenantMenu();
+string loginTenant() {
+    string username, password;
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+
+    bool loginStatus = tenantList.loginTenant(username, password);
+    if (loginStatus) {
+        return username; // Return the username after successful login
+    }
+    return ""; // Return an empty string if login failed
 }
 
 void loginManager(){
@@ -149,7 +180,7 @@ void tenantMenu() {
             saveFavorite();
 		}
 		else if (choice == 5) {
-            displayFavorite();
+            placeRent();
 		}
 		else if (choice == 6) {
             rentHistory();
@@ -278,6 +309,7 @@ void searchDetails(int choice){
             cout << val << "\t";
         }
         cout << endl;
+        cout << string(50, '-') << endl;
     }
 
     saveFavorite();
@@ -327,7 +359,7 @@ void displayPorperty() {
                 //     value.replace(pos, 1, ",");
                 // }
 
-                // cout << data[0][j] << ": " << value << endl;
+                //cout << data[0][j] << ": " << value << endl;
 
                 cout << value << endl;
             }
@@ -377,22 +409,53 @@ void saveFavorite(){
     }
 
     // Insert the matchingRows into the DoublyLinkedList
+    // for (const auto& row : matchingRows) {
+    //     favList.insertAtbeginning(row);
+    // }
+
+    string ads_id;
+
+    // Insert the matchingRows into the DoublyLinkedList
     for (const auto& row : matchingRows) {
-        favList.insertAtbeginning(row);
+        ads_id = matchingRows[0][0];
+
+        PropertyInfo property1 = {ads_id, currentUsername, "saved"};
+        //favList.insertAtbeginning(ads_id+"-"+currentUsername);
+        propertyList.insertAtbeginning(property1);
     }
 
     // Display the favorite properties
-    favList.showBackward();
+    // favList.showBackward();
+    propertyList.displayStatus(ads_id);
 
     cout << "Add successfully " << endl;
     return;
 }
 
 void placeRent() {
+    string targetElemet;
+
+    //favList.showBackward();
+    // favList.filter(currentUsername);
+    propertyList.displayStatus(currentUsername);
+
+    cout << "Enter the property ads id: ";
+    cin >> targetElemet;
+
+    propertyList.displayStatus(targetElemet);
 }
 
 void displayFavorite() {
-    favList.showBackward();
+    string targetElemet;
+
+    //favList.showBackward();
+    // favList.filter(currentUsername);
+    propertyList.displayStatus(currentUsername);
+
+    cout << "Enter the property ads id: ";
+    cin >> targetElemet;
+
+    propertyList.displayStatus(targetElemet);
 }
 
 void rentHistory(){
