@@ -207,7 +207,7 @@ void adminmenu(){
         switch (choice)
         {
             case 1:
-                // registermanager();
+                registermanager();
                 break;
             case 2:
                 // updatestatus();
@@ -220,7 +220,7 @@ void adminmenu(){
                 break;
             case 5:
                 break;
-                
+
             default:
 
                 cout << "Invalid input please select the correct input"<<endl<<endl;
@@ -228,14 +228,9 @@ void adminmenu(){
                 break;
 
         }
-        
-    
-
-    
-
-   
-
-    
+            
+}
+void registermanager(){
     
 }
 
