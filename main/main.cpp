@@ -21,6 +21,7 @@ void saveFavorite();
 void placeRent();
 void displayFavorite();
 void rentHistory();
+void adminmenu();
 bool managerLogin(string username, string password);
 
 string loginTenant();
@@ -118,7 +119,8 @@ void mainMenu(){
 		}
 		else if (choice == 4)
 		{
-			loginAdmin();
+			adminmenu();
+            
 		}
 		else if (choice == 5)
 		{
@@ -158,8 +160,83 @@ void loginManager(){
     cout << "loginManager" << endl;
 }
 
-void loginAdmin(){
-    cout << "loginAdmin" << endl;
+// void loginAdmin(){
+//     string username = "admin";
+//     string passcode ="admin123";
+//     string name="";
+//     string pass="";
+//     cout << "Admin pages (Enter 3 to Exits this pages)" << endl << endl;
+
+//     cout << "Enter your admin name"<< endl;
+//     cin>>name;
+
+//     if(name == "3"){
+//         cout << "Exiting"<< endl;
+//             main();
+//         }
+
+
+//     cout <<"Enter your passcode"<< endl;
+//     cin >> pass;
+
+
+//     if(name!=username || pass!= passcode){
+//         cout<<endl <<"Invalid Credentials"<<endl;
+
+//         loginAdmin();
+
+//     }else{
+//         cout<<endl << "Welcome"<< name <<endl;
+//         adminmenu();
+//     }
+
+// }
+
+void adminmenu(){
+    int choice;
+
+    cout << "1. Add New Manager" << endl;
+    cout << "2. Modify Manager Status" << endl;
+    cout << "3. Display Tenants" << endl;
+    cout << "4. Display Property Information" << endl;
+    cout << "5. Log Out" << endl;
+    cout<<"Please Select"<<endl;
+    
+    cin>>choice;
+    
+        switch (choice)
+        {
+            case 1:
+                // registermanager();
+                break;
+            case 2:
+                // updatestatus();
+                break;
+            case 3:
+                // displaytenants();
+                break;
+            case 4:
+                // displaytenants();
+                break;
+            case 5:
+                break;
+                
+            default:
+
+                cout << "Invalid input please select the correct input"<<endl<<endl;
+                adminmenu();
+                break;
+
+        }
+        
+    
+
+    
+
+   
+
+    
+    
 }
 
 void tenantMenu() {
