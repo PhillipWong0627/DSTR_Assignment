@@ -3,6 +3,7 @@
 #include "importdata.h"
 #include "tenant.h"
 #include "property.h"
+#include "manager.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ void saveFavorite();
 void placeRent();
 void displayFavorite();
 void rentHistory();
+bool managerLogin(string username, string password);
 
 string loginTenant();
 string currentUsername;
@@ -32,6 +34,7 @@ string currentUsername;
 PropertyList propertyList;
 DoublyLinkedList<string> favList;
 TenantList tenantList;
+Manager manager;
 
 int main(){
     mainMenu();
@@ -89,7 +92,29 @@ void mainMenu(){
 		}
 		else if (choice == 3)
 		{
-			loginManager();
+			string username, password;
+            cout << "Please Enter manager name: " << endl;
+            cin>> username;
+            
+            cout << "Please Enter manager password" << endl;
+            cin  >> password;
+
+            bool valid = manager.managerLogin(username,password);
+            
+            
+            
+
+
+            if(valid){
+                cout << "Welcome Back Manager: " << username << endl;
+                // managerMenu();
+                manager.managerMenu();
+
+            }
+            else
+            {
+                cout << "Inavlid username/password " << endl;
+            }
 		}
 		else if (choice == 4)
 		{
