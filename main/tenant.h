@@ -120,5 +120,77 @@ class DoublyLinkedList
         {
             /* PLACE YOUR CODE HERE */
         }
+
+        
+        void find(const T& targetValue) const
+        {
+            DoublyNode<T>* current = head;
+            bool found = false;
+            while (current != nullptr)
+            {
+                // Check if the current element contains the target value
+                if (current->data.find(targetValue) != std::string::npos)
+                {
+                    found = true;
+                    cout << "Element found: " << current->data << endl;
+                }
+                current = current->next;
+            }
+            if (!found)
+            {
+                cout << "Element not found!" << endl;
+            }
+        }
+
+        void filter(const string& targetValue) const {
+            DoublyNode<T>* current = head;
+            cout << "--- FILTERED VALUES ---" << endl;
+            while (current != nullptr) {
+                // Check if the current element contains the target value
+                if (current->data.find(targetValue) != std::string::npos) {
+                    cout << current->data << endl;
+                }
+                current = current->next;
+            }
+            cout << "------------------------" << endl;
+        }
     };
+
+// Add a new class to represent the Tenant with username and password
+class Tenant {
+public:
+    string username;
+    string password;
+
+    // Default constructor
+    Tenant() : username(""), password("") {}
+
+    // Parameterized constructor
+    Tenant(const string& username, const string& password) : username(username), password(password) {}
+};
+
+class TenantList {
+public:
+    DoublyLinkedList<Tenant> tenantList;
+
+    // Function to register a new tenant
+    void registerTenant(const string& username, const string& password) {
+        Tenant newTenant(username, password);
+        tenantList.insertAtbeginning(newTenant);
+    }
+
+    // Function to login a tenant
+    bool loginTenant(const string& username, const string& password) {
+        DoublyNode<Tenant>* current = tenantList.head;
+        while (current != nullptr) {
+            if (current->data.username == username && current->data.password == password) {
+                //cout << "Login successful!" << endl;
+                return true;
+            }
+            current = current->next;
+        }
+        cout << "Invalid username or password. Login failed!" << endl;
+        return false;
+    }
+};
 
