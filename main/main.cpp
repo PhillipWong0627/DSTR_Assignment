@@ -4,6 +4,7 @@
 #include "tenant.h"
 #include "property.h"
 #include "manager.h"
+#include "manager_linkedlist.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ void placeRent();
 void displayFavorite();
 void rentHistory();
 void adminmenu();
+void registermanager();
 bool managerLogin(string username, string password);
 
 string loginTenant();
@@ -34,6 +36,7 @@ string currentUsername;
 
 PropertyList propertyList;
 DoublyLinkedList<string> favList;
+ManagerLinkedList<string> managerlist;
 TenantList tenantList;
 Manager manager;
 
@@ -237,6 +240,8 @@ void registermanager(){
     cin >> name;
     cout<< "Enter Password"<< endl;
     cin >> pass;
+
+    managerlist.insertAtEnd(name,pass,status);
 
 }
 

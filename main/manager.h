@@ -6,16 +6,16 @@ using namespace std;
 
 class Manager
 {
-private:
-    string name;
-    string password;
-    string status;
 
 public:
 
     // DoublyLinkedList<Tenant> tenantList;
-
+    string name;
+    string password;
+    string status;
     
+    
+
     
     void managerMenu()
     {
