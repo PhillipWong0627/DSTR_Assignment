@@ -231,7 +231,13 @@ void adminmenu(){
             
 }
 void registermanager(){
-    
+    string name,pass;
+    string status ="active";
+    cout<< "Enter Username"<< endl;
+    cin >> name;
+    cout<< "Enter Password"<< endl;
+    cin >> pass;
+
 }
 
 void tenantMenu() {
