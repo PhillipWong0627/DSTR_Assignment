@@ -122,7 +122,8 @@ void regCustomer()
     cout << "Enter password: ";
     cin >> password;
 
-    tenantList.registerTenant(username, password);
+    tenantList.registerTenant(username, password, "active");
+    tenantList.displayAll();
 
     cout << "Registration successful!" << endl;
 }
@@ -157,13 +158,14 @@ void loginManager()
     if (name == "3")
     {
         cout << "Exiting" << endl;
-        main();
+        return;
     }
     cout << "Enter your passcode" << endl;
     cin >> pass;
 
     if(managerlist.validatemanager(name,pass)==true){
         cout<<"Welcome "<< name << endl;
+        manager.managerMenu();
     }else{
         cout<<" Invalid Credentials or Ur Account Has Been Disabled " << endl;
     }

@@ -1,8 +1,14 @@
+#ifndef MANAGER_H
+#define MANAGER_H
+
 #include <iostream>
 #include <limits>
+#include "tenant.h"
 // #include "DoublyLinkedList.h"
 
 using namespace std;
+
+extern TenantList tenantList;
 
 class Manager
 {
@@ -58,7 +64,7 @@ public:
                 cout << "All Registered Tenants: " << endl;
 
             
-                // tenantList.displayAll();
+                tenantList.displayAll();
             }
             else if (choice == 2)
             {
@@ -107,3 +113,6 @@ public:
         return false;
     }
 };
+
+#endif 
+
