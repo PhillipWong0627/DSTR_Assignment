@@ -60,6 +60,7 @@ class ManagerLinkedList
                 
             size++;
         }
+       
 
         void insertAtEnd(T name, T password, T status )
         {
@@ -95,14 +96,30 @@ class ManagerLinkedList
         {
             return size;
         }
+        bool validate(T name){
+            ManagerDoublyNode<T> *curr = head;
+            
+            while (curr != nullptr)
+            {   
+                if(name== curr->name){
+                    return false;
+                    break;
+                }
+                
+                curr = curr->next;
 
+            }
+            return true;
+        }
         void showForward()
         {
             ManagerDoublyNode<T> *curr = head;
             cout << "\n--- DISPLAY LINKED LIST [FORWARD] = " << size << " elements ---" << endl;
             while (curr != nullptr)
             {
-                cout << curr->data << " ";
+                cout << curr->name << " ";
+                cout << curr->password<< " ";
+                cout << curr->status << endl; 
                 curr = curr->next;
             }
             cout << endl;

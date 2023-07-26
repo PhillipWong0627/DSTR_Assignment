@@ -211,7 +211,8 @@ void adminmenu(){
         {
             case 1:
                 registermanager();
-                break;
+                adminmenu();
+                
             case 2:
                 // updatestatus();
                 break;
@@ -240,9 +241,14 @@ void registermanager(){
     cin >> name;
     cout<< "Enter Password"<< endl;
     cin >> pass;
-
-    managerlist.insertAtEnd(name,pass,status);
-
+    if(managerlist.validate(name)==true){
+        managerlist.insertAtEnd(name,pass,status);
+        cout<<"Manager successfully inserted"<<endl;
+    }else{
+        cout<<"Same name existed"<<endl;
+    }
+    
+    managerlist.showForward();
 }
 
 void tenantMenu() {
