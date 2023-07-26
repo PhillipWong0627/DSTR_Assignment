@@ -228,7 +228,7 @@ void adminmenu()
         }
         else if (choice == 2)
         {   
-            
+            cout<< " Managers list "<<endl;
             managerlist.showForward();
             adminmenu();
             // updatestatus();
