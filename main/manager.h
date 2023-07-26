@@ -4,9 +4,11 @@
 #include <iostream>
 #include <limits>
 #include "tenant.h"
-// #include "DoublyLinkedList.h"
 
 using namespace std;
+
+/*Defining the tenantList VARIABLE - 
+Allocate Memory for the tenantList*/
 
 extern TenantList tenantList;
 
