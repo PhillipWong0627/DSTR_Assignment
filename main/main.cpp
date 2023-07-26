@@ -101,25 +101,7 @@ void mainMenu()
         }
         else if (choice == 3)
         {
-            string username, password;
-            cout << "Please Enter manager name: " << endl;
-            cin >> username;
-
-            cout << "Please Enter manager password" << endl;
-            cin >> password;
-
-            bool valid = manager.managerLogin(username, password);
-
-            if (valid)
-            {
-                cout << "Welcome Back Manager: " << username << endl;
-                // managerMenu();
-                manager.managerMenu();
-            }
-            else
-            {
-                cout << "Inavlid username/password " << endl;
-            }
+            loginManager();
         }
         else if (choice == 4)
         {
@@ -163,38 +145,67 @@ string loginTenant()
 
 void loginManager()
 {
-    cout << "loginManager" << endl;
+    string name = "";
+    string pass = "";
+    cout << "Manager pages (Enter 3 to Exits this pages)" << endl
+         << endl;
+
+    cout << "Enter your Manager name" << endl;
+    cin >> name;
+
+    
+    if (name == "3")
+    {
+        cout << "Exiting" << endl;
+        main();
+    }
+    cout << "Enter your passcode" << endl;
+    cin >> pass;
+
+    if(managerlist.validatemanager(name,pass)==true){
+        cout<<"Welcome "<< name << endl;
+    }else{
+        cout<<" Invalid Credentials or Ur Account Has Been Disabled " << endl;
+    }
+
+
 }
 
-// void loginAdmin(){
-//     string username = "admin";
-//     string passcode ="admin123";
-//     string name="";
-//     string pass="";
-//     cout << "Admin pages (Enter 3 to Exits this pages)" << endl << endl;
+void loginAdmin()
+{
+    string username = "admin";
+    string passcode = "admin123";
+    string name = "";
+    string pass = "";
+    cout << "Admin pages (Enter 3 to Exits this pages)" << endl
+         << endl;
 
-//     cout << "Enter your admin name"<< endl;
-//     cin>>name;
+    cout << "Enter your admin name" << endl;
+    cin >> name;
 
-//     if(name == "3"){
-//         cout << "Exiting"<< endl;
-//             main();
-//         }
+    if (name == "3")
+    {
+        cout << "Exiting" << endl;
+        main();
+    }
 
-//     cout <<"Enter your passcode"<< endl;
-//     cin >> pass;
+    cout << "Enter your passcode" << endl;
+    cin >> pass;
 
-//     if(name!=username || pass!= passcode){
-//         cout<<endl <<"Invalid Credentials"<<endl;
+    if (name != username || pass != passcode)
+    {
+        cout << endl
+             << "Invalid Credentials" << endl;
 
-//         loginAdmin();
-
-//     }else{
-//         cout<<endl << "Welcome"<< name <<endl;
-//         adminmenu();
-//     }
-
-// }
+        loginAdmin();
+    }
+    else
+    {
+        cout << endl
+             << "Welcome" << name << endl;
+        adminmenu();
+    }
+}
 
 void adminmenu()
 {
@@ -214,7 +225,6 @@ void adminmenu()
         {
             registermanager();
             adminmenu();
-        
         }
         else if (choice == 2)
         {

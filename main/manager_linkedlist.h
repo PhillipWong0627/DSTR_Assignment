@@ -111,6 +111,22 @@ class ManagerLinkedList
             }
             return true;
         }
+        bool  validatemanager(T name, T pass){
+
+            ManagerDoublyNode<T> *curr = head;
+            while (curr != nullptr)
+            {   
+                if(name == curr->name && pass == curr->password && curr->status =="active"){
+                        return true;
+                        break;
+                }
+                
+                curr = curr->next;
+
+            }
+            return false;
+            
+        }
         void showForward()
         {
             ManagerDoublyNode<T> *curr = head;
