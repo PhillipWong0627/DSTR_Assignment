@@ -227,7 +227,10 @@ void adminmenu()
             adminmenu();
         }
         else if (choice == 2)
-        {
+        {   
+            
+            managerlist.showForward();
+            adminmenu();
             // updatestatus();
             break;
         }
