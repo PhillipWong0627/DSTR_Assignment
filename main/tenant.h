@@ -219,6 +219,18 @@ public:
         cout << endl;
     }
 
+    Tenant *searchTenant(const string &username) const {
+        DoublyNode<Tenant> *current = tenantList.head;
+
+        while(current != nullptr){
+            if(current->data.username == username){
+                return &(current->data);
+            }
+            current = current->next;
+        }
+        return nullptr;
+    }  
+
 
 };
 

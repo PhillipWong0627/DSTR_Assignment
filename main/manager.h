@@ -71,28 +71,39 @@ public:
             else if (choice == 2)
             {
 
-                string tenantName, pw;
-                bool active;
+                cout << "Searching Tenant's details..." << endl;
 
-                cout << "Enter Name:  " << endl;
+                string tenantName;
+                cout << "Please Enter Tenant Name: " << endl;
                 cin >> tenantName;
-                
-                cout << "Enter Password: " << endl;
-                cin >> pw;
 
-                // tenantList.insertAtEnd(TenantTest(tenantName,pw));
+                Tenant * foundTenant = tenantList.searchTenant(tenantName);
 
+                if(foundTenant != nullptr)
+                {   
+                    cout << "Tenant has Found!" << endl;
+                    cout << "Tenant Details: " << endl;
+                    cout << "Username: " << foundTenant->username << endl;
+                    cout << "Password: " << foundTenant->password << endl;
+                    cout << "Status: " << foundTenant->status << endl;
+                }else{
+                    cout << "Tenant not found..." << endl;
+                }
 
 
             }
             else if (choice == 3)
             {
+                cout << "Delete tenant account based on inactivity status" << endl;
+
             }
             else if (choice == 4)
             {
+                cout << "Manage Tenancy Process" << endl;
             }
             else if (choice == 5)
             {
+                cout << "5. Manage Payment" << endl;
             }
             else if (choice == 6)
             {
@@ -103,17 +114,17 @@ public:
         }
     }
 
-    bool managerLogin(string username, string password)
-    {
+    // bool managerLogin(string username, string password)
+    // {
 
-        if (username == "Tee" && password == "123")
-        {
+    //     if (username == "Tee" && password == "123")
+    //     {
 
-            return true;
-        }
+    //         return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 };
 
 #endif 
