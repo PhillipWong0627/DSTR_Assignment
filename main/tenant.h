@@ -1,3 +1,6 @@
+#ifndef TENANT_H
+#define TENANT_H
+
 #include <iostream>
 
 using namespace std;
@@ -120,5 +123,115 @@ class DoublyLinkedList
         {
             /* PLACE YOUR CODE HERE */
         }
+
+        
+        void find(const T& targetValue) const
+        {
+            DoublyNode<T>* current = head;
+            bool found = false;
+            while (current != nullptr)
+            {
+                // Check if the current element contains the target value
+                if (current->data.find(targetValue) != std::string::npos)
+                {
+                    found = true;
+                    cout << "Element found: " << current->data << endl;
+                }
+                current = current->next;
+            }
+            if (!found)
+            {
+                cout << "Element not found!" << endl;
+            }
+        }
+
+        void filter(const string& targetValue) const {
+            DoublyNode<T>* current = head;
+            cout << "--- FILTERED VALUES ---" << endl;
+            while (current != nullptr) {
+                // Check if the current element contains the target value
+                if (current->data.find(targetValue) != std::string::npos) {
+                    cout << current->data << endl;
+                }
+                current = current->next;
+            }
+            cout << "------------------------" << endl;
+        }
     };
 
+// Add a new class to represent the Tenant with username and password
+class Tenant {
+public:
+    string username;
+    string password;
+    string status;
+
+    // Default constructor
+    Tenant() : username(""), password("") {}
+
+    // Parameterized constructor
+    Tenant(const string& username, const string& password) : username(username), password(password) {}
+};
+
+class TenantList {
+public:
+    DoublyLinkedList<Tenant> tenantList;
+
+    // Function to register a new tenant
+    void registerTenant(const string& username, const string& password, const string & status) {
+        Tenant newTenant(username, password);
+        tenantList.insertAtbeginning(newTenant);
+        cout << status << endl;
+       
+    }
+
+    // Function to login a tenant
+    bool loginTenant(const string& username, const string& password) {
+        DoublyNode<Tenant>* current = tenantList.head;
+        while (current != nullptr) {
+            if (current->data.username == username && current->data.password == password) {
+                //cout << "Login successful!" << endl;
+                return true;
+            }
+            current = current->next;
+        }
+        cout << "Invalid username or password. Login failed!" << endl;
+        return false;
+    }
+
+    // Function to display all registered tenants
+    void displayAll() const {
+        DoublyNode<Tenant>* current = tenantList.head;
+        bool found = false; // Flag to track if any tenant is found
+
+        cout << "--- DISPLAY ALL REGISTERED TENANTS ---" << endl;
+        while (current != nullptr) {
+            cout << "Username: " << current->data.username << ", Password: " << current->data.password;
+            cout << ", Status: " << current->data.status << endl;
+
+            found = true; // Set flag to true if at least one tenant is found
+            current = current->next;
+        }
+
+        if (!found) {
+            cout << "No tenants registered!" << endl; // Display this message if no tenants are registered
+        }
+        cout << endl;
+    }
+
+    Tenant *searchTenant(const string &username) const {
+        DoublyNode<Tenant> *current = tenantList.head;
+
+        while(current != nullptr){
+            if(current->data.username == username){
+                return &(current->data);
+            }
+            current = current->next;
+        }
+        return nullptr;
+    }  
+
+
+};
+
+#endif // TENANT_H
