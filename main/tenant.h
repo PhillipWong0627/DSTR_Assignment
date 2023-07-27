@@ -107,7 +107,7 @@ class DoublyLinkedList
         {
             /* PLACE YOUR CODE HERE */
             DoublyNode<T> *curr = tail;
-            cout << "\n--- DISPLAY LINKED LIST [BACKWARD] " << size << " elements ---" << endl;
+            cout << "\n--- DISPLAY (FAVOURITE LIST) LINKED LIST [BACKWARD] " << size << " elements ---" << endl;
             while (curr != nullptr)
             {
                 cout << curr->data << " ";

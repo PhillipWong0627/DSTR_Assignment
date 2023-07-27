@@ -221,6 +221,7 @@ void searchPorperty(){
     
 }
 
+// linear search
 void searchDetails(int choice){
 
     // Import data from CSV
@@ -329,10 +330,11 @@ void displayPorperty() {
 
                 // cout << data[0][j] << ": " << value << endl;
 
-                cout << value << endl;
+                cout << value << " ";
             }
+            
             // Print the line of dashes after each row
-            cout << string(30, '-') << endl;
+            cout << '\n' << string(30, '-') << endl;
         }
 
         // Ask the user if they want to see more entries
