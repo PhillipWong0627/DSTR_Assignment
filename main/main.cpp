@@ -20,14 +20,17 @@ void saveFavorite();
 void placeRent();
 void displayFavorite();
 void rentHistory();
+void pendingRent();
+void makePayment(); 
 
 string loginTenant();
 string currentUsername;
+string ads_id;
+string inputadsid();
 
-// havent know got use or not
-//void displayRent();
-//void printData();
-//void printTable(const std::vector<std::vector<std::string>>& rows);
+// manager part
+void changeApprove();
+void changeRented();
 
 PropertyList propertyList;
 DoublyLinkedList<string> favList;
@@ -54,7 +57,7 @@ void mainMenu(){
 		cout << "Please select: ";
 		cin >> choice;
 
-		while (cin.fail() || choice < 1 || choice > 5)
+		while (cin.fail() || choice < 1 || choice > 7)
 		{
 			system("cls");
 			cin.clear();
@@ -79,12 +82,15 @@ void mainMenu(){
             string loggedInUsername = loginTenant(); // Receive the username from loginTenant function
             if (!loggedInUsername.empty()) {
                 currentUsername = loggedInUsername; // Store the current username in the global variable
+                cout << string(50, '-') << endl;
                 cout << "Login successful! Welcome, " << currentUsername << "!" << endl;
                 cout << string(50, '-') << endl;
                 tenantMenu(); // Proceed with tenantMenu or other actions
             } else {
                 // Handle failed login (e.g., show error message, return to main menu, etc.)
+                cout << string(50, '-') << endl;
                 cout << "Login failed. Please try again." << endl;
+                cout << string(50, '-') << endl;
             }
 		}
 		else if (choice == 3)
@@ -94,11 +100,20 @@ void mainMenu(){
 		else if (choice == 4)
 		{
 			loginAdmin();
+            // displayPorperty();
 		}
 		else if (choice == 5)
 		{
             return;
 			
+		}
+        else if (choice == 6)
+		{
+            changeApprove();
+		}
+        else if (choice == 7)
+		{
+            changeRented();	
 		}
 	}
 }
@@ -110,9 +125,22 @@ void regCustomer(){
     cout << "Enter password: ";
     cin >> password;
 
-    tenantList.registerTenant(username, password);
+    // check register status
+    bool registerStatus = tenantList.registerTenant(username, password);
+    if (registerStatus) {
+        cout << string(50, '-') << endl;
+        cout << "Registration successful!" << endl;
+        cout << string(50, '-') << endl;
+        return;
+    }
+    else{
+        system("cls");
+        cout << string(50, '-') << endl;
+        cout << "Username already exists. Please choose a different username." << endl;
+        cout << string(50, '-') << endl;
+        return;
+    }
 
-    cout << "Registration successful!" << endl;
 }
 
 string loginTenant() {
@@ -124,9 +152,9 @@ string loginTenant() {
 
     bool loginStatus = tenantList.loginTenant(username, password);
     if (loginStatus) {
-        return username; // Return the username after successful login
+        return username;
     }
-    return ""; // Return an empty string if login failed
+    return "";
 }
 
 void loginManager(){
@@ -147,10 +175,11 @@ void tenantMenu() {
         cout << "4. Save their favorite property" << endl;
         cout << "5. Place a rent request the desired property that is stored in the favorite list" << endl;
         cout << "6. Display property renting history" << endl;
-        cout << "7. Logout" << endl;
+        cout << "7. Make Payment for the rent property" << endl;
+        cout << "8. Logout" << endl;
 		cout << "Please select: ";
 		cin >> choice;
-		while (cin.fail() || choice < 1 || choice > 7)
+		while (cin.fail() || choice < 1 || choice > 8)
 		{
 			system("cls");
 			cin.clear();
@@ -163,7 +192,8 @@ void tenantMenu() {
             cout << "4. Save their favorite property" << endl;
             cout << "5. Place a rent request the desired property that is stored in the favorite list" << endl;
             cout << "6. Display property renting history" << endl;
-            cout << "7. Logout" << endl;
+            cout << "7. Make Payment for the rent property" << endl;
+            cout << "8. Logout" << endl;
             cout << "Please select: ";
 			cin >> choice;
 		}
@@ -185,7 +215,11 @@ void tenantMenu() {
 		else if (choice == 6) {
             rentHistory();
 		}
-		else if (choice == 7) {
+        else if (choice == 7)
+		{
+            makePayment();
+		}
+		else if (choice == 8) {
 			system("cls");
 			cout << "Logout successfully!" << endl;
 			return;
@@ -237,7 +271,7 @@ void searchPorperty(){
         cout << "11. Furnished" << endl;
         cout << "12. Facilities" << endl;
         cout << "13. Additional Facilities" << endl;
-        cout << "13. Back to Main Menu" << endl;
+        cout << "14 Back to Main Menu" << endl;
         cout << "Please select: ";
         cin >> choice;
     }
@@ -312,8 +346,18 @@ void searchDetails(int choice){
         cout << string(50, '-') << endl;
     }
 
-    saveFavorite();
+    char choices;
+    cout << "Do you want to add to favorite? (y/n): ";
+    cin >> choices;
 
+    if (choices == 'n' || choices == 'N') {
+        return;
+    } else if (choices == 'y' || choices == 'Y') {
+        saveFavorite();
+        return;
+    } else {
+        return; 
+    }
 }
 
 void displayPorperty() {
@@ -333,36 +377,15 @@ void displayPorperty() {
 
         // Loop through the rows in the current page
         for (int i = startIndex; i < endIndex; ++i) {
-            // Loop through the columns of the current row
-            for (size_t j = 0; j < data[i].size(); ++j) {
-                // Process the value with double quotes if necessary
-                string value = data[i][j];
-                // if (value.front() == '"' && value.back() != '"') {
-                //     // The value is enclosed in double quotes, but it spans multiple columns
-                //     // Combine the values until we find the closing double quote
-                //     while (j + 1 < data[i].size() && data[i][j + 1].back() != '"') {
-                //         value += ";" + data[i][j + 1];
-                //         ++j; // Skip the next column as it's already combined
-                //     }
-                //     // Add the closing double quote from the last column
-                //     value += ";" + data[i][j + 1].substr(0, data[i][j + 1].size() - 1);
-                //     ++j; // Skip the next column as it's already combined
-                // }
+            // Assuming you have read the CSV file and stored the data in the 'data' vector
 
-                // if (value.front() == '"') {
-                //     value = value.substr(1, value.size() - 2);
-                // }
-
-                // // Replace the semicolon back to comma before displaying
-                // size_t pos;
-                // while ((pos = value.find(';')) != std::string::npos) {
-                //     value.replace(pos, 1, ",");
-                // }
-
-                //cout << data[0][j] << ": " << value << endl;
-
-                cout << value << endl;
+            // Displaying all values in row 1
+            cout << "Property ID: " << data[i][0] << endl;
+            for (const auto& value : data[i]) {
+                cout << value << "\t";
             }
+            cout << endl;
+
             // Print the line of dashes after each row
             cout << string(30, '-') << endl;
         }
@@ -378,17 +401,13 @@ void displayPorperty() {
             currentPage++; // Move to the next page
         } else {
             cout << "Invalid choice. Please enter 'y' or 'n'." << endl;
+            return;
         }
     }
 }
 
 void saveFavorite(){
-    string targetProperty;
-
-    cout << "Enter the property ads id: ";
-    cin >> targetProperty;
-
-    // DoublyLinkedList<string> favList;
+    string targetProperty = inputadsid();
 
     // // Import data from CSV
     vector<vector<string>> data = importdata();
@@ -408,56 +427,249 @@ void saveFavorite(){
         }
     }
 
-    // Insert the matchingRows into the DoublyLinkedList
-    // for (const auto& row : matchingRows) {
-    //     favList.insertAtbeginning(row);
-    // }
+    // Check if any matching rows were found
+    if (matchingRows.empty()) {
+        // Ask the user if they want to see more entries
+        char choice;
+        cout << "No matching rows found for ads id: " << targetProperty << endl;
+        cout << "Do you want to continue? (y/n): ";
+        cin >> choice;
 
-    string ads_id;
+        if (choice == 'n' || choice == 'N') {
+            return;
+        } else if (choice == 'y' || choice == 'Y') {
+            cout << "Please enter a valid ads id." << endl;
+            saveFavorite(); // Ask the user to enter the ads id again
+            return; // Exit the function to avoid further processing
+        } else {
+            cout << "Invalid choice. Please enter 'y' or 'n'." << endl;
+            saveFavorite();
+            return; // Exit the function to avoid further processing
+        }
+
+    }
+
+    string ads_ids; 
+    bool foundFavorite;
+    string monthlyrent;
+    int rentValue = 0;
 
     // Insert the matchingRows into the DoublyLinkedList
     for (const auto& row : matchingRows) {
         ads_id = matchingRows[0][0];
+        monthlyrent = matchingRows[0][3];
 
-        PropertyInfo property1 = {ads_id, currentUsername, "saved"};
-        //favList.insertAtbeginning(ads_id+"-"+currentUsername);
-        propertyList.insertAtbeginning(property1);
+        // Create a stringstream to extract the integer
+        monthlyrent.erase(remove(monthlyrent.begin(), monthlyrent.end(), ' '), monthlyrent.end());
+
+        bool foundDigit = false;
+
+        for (char c : monthlyrent) {
+            if (std::isdigit(c)) {
+                rentValue = rentValue * 10 + (c - '0');
+                foundDigit = true;
+            } else if (foundDigit) {
+                break;
+            }
+        }
+
+        ostringstream oss;
+        for (const auto& value : row) {
+            if (!oss.str().empty()) {
+                oss << " "; // Separate values by tab character
+            }
+            oss << value;
+        }
+        if (!ads_ids.empty()) {
+            ads_ids += "\n"; // Separate rows by a new line character
+        }
+        ads_ids += oss.str();
+
+        PropertyInfo property1 = {ads_id, ads_ids, currentUsername, "Favorited", rentValue};
+
+        foundFavorite = propertyList.insertAtbeginning(property1);
+
     }
 
-    // Display the favorite properties
-    // favList.showBackward();
-    propertyList.displayStatus(ads_id);
+    if (foundFavorite) {
+        propertyList.displayStatus(ads_id, "Favorited");
+        cout << string(50, '-') << endl;
+        cout << "Add successfully " << endl;
+        cout << string(50, '-') << endl;
+        return;
+    }
+    else{
+        // Ask the user if they want to see more entries
+        char choice;
+        cout << "Do you search again? (y/n): ";
+        cin >> choice;
 
-    cout << "Add successfully " << endl;
-    return;
+        if (choice == 'n' || choice == 'N') {
+            tenantMenu();
+            return;
+        } else if (choice == 'y' || choice == 'Y') {
+            saveFavorite();
+            return;
+        } else {
+            cout << "Invalid choice. Please enter 'y' or 'n'." << endl;
+            saveFavorite();
+            return;
+        }
+    }
 }
 
 void placeRent() {
-    string targetElemet;
+    bool foundProperty_1 = propertyList.displayStatus(currentUsername, "Favorited");
 
-    //favList.showBackward();
-    // favList.filter(currentUsername);
-    propertyList.displayStatus(currentUsername);
+    if (!foundProperty_1) {
+        // Ask the user if they want to see more entries
+        cout << string(50, '-') << endl;
+        cout << "Do have any favorite property, please add favorite property on choice 4! " << endl;
+        cout << string(50, '-') << endl;
+        tenantMenu();
+        return;
+    }
 
-    cout << "Enter the property ads id: ";
-    cin >> targetElemet;
+    string targetElemet = inputadsid();
 
-    propertyList.displayStatus(targetElemet);
+    bool foundProperty = propertyList.displayStatus(targetElemet, "Favorited");
+
+    if (foundProperty) {
+        // Ask the user if they want to see more entries
+        char choice;
+        cout << "Do you want to continue place rent? (y/n): ";
+        cin >> choice;
+
+        if (choice == 'n' || choice == 'N') {
+            tenantMenu();
+            return;
+        } else if (choice == 'y' || choice == 'Y') {
+            pendingRent();
+            return;
+        } else {
+            cout << "Invalid choice. Please enter 'y' or 'n'." << endl;
+            placeRent();
+            return;
+        }
+    }
+    else{
+        // Ask the user if they want to see more entries
+        char choice;
+        cout << "Do you search again? (y/n): ";
+        cin >> choice;
+
+        if (choice == 'n' || choice == 'N') {
+            tenantMenu();
+            return;
+        } else if (choice == 'y' || choice == 'Y') {
+            placeRent();
+            return;
+        } else {
+            cout << "Invalid choice. Please enter 'y' or 'n'." << endl;
+            placeRent();
+            return;
+        }
+    }
+}
+
+void pendingRent() {
+    string amount = "100";
+
+    cout << string(50, '-') << endl;
+    cout << "Processing place rent..." << std::endl;
+    cout << "Upload successful! Please wait for approval on it!" << std::endl;
+    cout << string(50, '-') << endl;
+
+    propertyList.changeStatus(ads_id, "pending");
+    cout << string(50, '-') << endl;
 }
 
 void displayFavorite() {
-    string targetElemet;
+    propertyList.displayStatus(currentUsername, "Favorited");
 
-    //favList.showBackward();
-    // favList.filter(currentUsername);
-    propertyList.displayStatus(currentUsername);
+    string targetElemet = inputadsid();
 
-    cout << "Enter the property ads id: ";
-    cin >> targetElemet;
-
-    propertyList.displayStatus(targetElemet);
+    propertyList.displayStatus(targetElemet, "Favorited");
 }
 
-void rentHistory(){
 
+void rentHistory(){
+    propertyList.displayStatus(currentUsername, "displayall");
+}
+
+
+string inputadsid() {
+    string targetProperty;
+    while (true) {
+        cout << "Enter the property ads id (8/9-digit integer): ";
+        cin >> targetProperty;
+
+        // Check if the input is a 9-digit integer
+        bool validInput = true;
+        for (char c : targetProperty) {
+            if (!isdigit(c)) {
+                validInput = false;
+                break;
+            }
+        }
+
+        if (validInput && targetProperty.length() == 9 || validInput && targetProperty.length() == 8) {
+            // Input is a valid 9-digit integer, break out of the loop
+            break;
+        } else {
+            cout << "Invalid input. Please enter a 9-digit integer." << endl;
+        }
+    }
+    
+    return targetProperty;
+}
+
+void changeApprove() {
+string targetElemet = inputadsid();
+propertyList.changeStatus(targetElemet, "approve");
+}
+
+void changeRented() {
+string targetElemet = inputadsid();
+propertyList.changeStatus(targetElemet, "rented");
+}
+
+void makePayment() {
+    bool foundProperty = propertyList.displayStatus(currentUsername, "approve");
+
+    if (foundProperty) {
+        string targetElemet = inputadsid();
+
+        propertyList.displayStatus(targetElemet, "approve");
+
+        cout << string(50, '-') << endl;
+        cout << "Please bank in to this account:" << endl;
+        cout << "Bank Details:" << endl;
+        cout << "Bank Account: 52165746487982" << endl;
+        cout << "Bank Name: Wong Liang Jian" << endl;
+        cout << "Bank: Wong Bank" << endl;
+        cout << string(50, '-') << endl;
+
+        char choice;
+        cout << "Do you done the payment? (y/n): ";
+        cin >> choice;
+
+        if (choice == 'n' || choice == 'N') {
+            return;
+        } else if (choice == 'y' || choice == 'Y') {
+            propertyList.changeStatus(targetElemet, "waiting");
+            return;
+        } else {
+            cout << "Invalid choice. Please enter 'y' or 'n'." << endl;
+            makePayment();
+            return;
+        }
+    }
+    else{
+        // Ask the user if they want to see more entries
+        cout << string(50, '-') << endl;
+        cout << "Do have any approved property, please place rennt on choice 5! " << endl;
+        cout << string(50, '-') << endl;
+        return;
+    }
 }

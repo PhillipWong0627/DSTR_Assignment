@@ -25,7 +25,7 @@ class DoublyLinkedList
 
         DoublyLinkedList()
         {
-            cout << "--- Constructing the Doubly LinkedList object ---" << endl;
+            //cout << "--- Constructing the Doubly LinkedList object ---" << endl;
             this->size = 0;
             this->head = nullptr;
             this->tail = nullptr;
@@ -173,10 +173,21 @@ class TenantList {
 public:
     DoublyLinkedList<Tenant> tenantList;
 
-    // Function to register a new tenant
-    void registerTenant(const string& username, const string& password) {
+    bool registerTenant(const string& username, const string& password) {
+        // Check if the username already exists in the linked list
+        DoublyNode<Tenant>* current = tenantList.head;
+        while (current != nullptr) {
+            if (current->data.username == username) {
+                return false;; // Exit the function if the username already exists
+            }
+            current = current->next;
+        }
+
+        // If the username does not exist, create a new tenant and insert it into the linked list
         Tenant newTenant(username, password);
         tenantList.insertAtbeginning(newTenant);
+
+        return true;
     }
 
     // Function to login a tenant
