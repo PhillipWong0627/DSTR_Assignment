@@ -1,10 +1,12 @@
 #include <iostream>
 #include <limits>
+
 #include "importdata.h"
 #include "tenant.h"
 #include "property.h"
 #include "manager.h"
 #include "manager_linkedlist.h"
+#include "sortFunction.h"
 
 using namespace std;
 
@@ -27,6 +29,9 @@ void makePayment();
 void adminmenu();
 void registermanager();
 bool managerLogin(string username, string password);
+int stringToInteger(const string &str);
+void BubbleSortRentalFee(vector<vector<string> >& data);
+void displaySortedDataInPages(vector<vector<string> > &data, int numEntriesPerPage);
 
 string loginTenant();
 string currentUsername;
@@ -47,6 +52,7 @@ DoublyLinkedList<string> favList;
 ManagerLinkedList<string> managerlist;
 TenantList tenantList;
 Manager manager;
+SortFunction sortFunction;
 
 int main()
 {
@@ -354,7 +360,7 @@ void tenantMenu()
         }
         if (choice == 1)
         {
-            cout << "sortTenant" << endl;
+            sortTenant();
         }
         else if (choice == 2)
         {
@@ -390,7 +396,49 @@ void tenantMenu()
 
 void sortTenant()
 {
-    cout << "sortTenant" << endl;
+    // import data
+    vector<vector<string> > data = importdata();
+
+    int choice = 0;
+
+    cout << "Sort By" << endl;
+    cout << "1) Rental Fee" << endl;
+    cout << "2) Location" << endl;
+    cout << "3) Demo" << endl;
+    cin >> choice;
+
+    while (cin.fail() || choice < 1 || choice > 3)
+    {
+        system("cls");
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Incorrect Input!" << endl;
+        cout << "1) Rental Fee" << endl;
+        cout << "2) Location" << endl;
+        cout << "3) Demo" << endl;
+        cout << "Please select: " << endl;
+        cin >> choice;
+    }
+
+
+    if(choice == 1)
+    {
+        displaySortedDataInPages(data, 30);
+    }
+    else if (choice == 2)
+    {
+        cout << "demo" << endl;
+    }
+    else if (choice == 3)
+    {
+        cout << "demo" << endl;
+    }
+    else
+    {
+        return;
+    }
+
+
 }
 
 void searchPorperty()
@@ -450,11 +498,10 @@ void searchPorperty()
     }
 }
 
-void searchDetails(int choice)
-{
+void searchDetails(int choice){
 
     // Import data from CSV
-    vector<vector<string>> data = importdata();
+    vector<vector<string> > data = importdata();
 
     string targetProperty;
     string result;
@@ -494,7 +541,7 @@ void searchDetails(int choice)
     // Assuming you have read the CSV file and stored the data in the 'data' vector
     string targetName = targetProperty; // Specify the name you want to search for
 
-    vector<vector<string>> matchingRows; // Vector to store matching rows
+    vector<vector<string> > matchingRows;  // Vector to store matching rows
 
     // // Search for the target name and store the matching rows
     for (const auto &row : data)
@@ -540,7 +587,7 @@ void displayPorperty()
     // DoublyLinkedList<string> favList;
 
     // Import data from CSV
-    vector<vector<string>> data = importdata();
+    vector<vector<string> > data = importdata();
 
     int numEntriesPerPage = 30;
     int currentPage = 1;
@@ -564,7 +611,7 @@ void displayPorperty()
             cout << endl;
 
             // Print the line of dashes after each row
-            cout << string(30, '-') << endl;
+            cout << '\n' << string(30, '-') << endl;
         }
 
         // Ask the user if they want to see more entries
@@ -592,12 +639,12 @@ void saveFavorite(){
     string targetProperty = inputadsid();
 
     // // Import data from CSV
-    vector<vector<string>> data = importdata();
+    vector<vector<string> > data = importdata();
 
     // // Assuming you have read the CSV file and stored the data in the 'data' vector
     string targetName = targetProperty; // Specify the name you want to search for
 
-    vector<vector<string>> matchingRows; // Vector to store matching rows
+    vector<vector<string> > matchingRows;  // Vector to store matching rows
 
     // // Search for the target name and store the matching rows
     for (const auto &row : data)
@@ -857,5 +904,94 @@ void makePayment() {
         cout << "Do have any approved property, please place rennt on choice 5! " << endl;
         cout << string(50, '-') << endl;
         return;
+    }
+}
+
+
+int stringToInteger(const string &str)
+{
+    int num = 0;
+    for (char ch : str)
+    {
+        if (isdigit(ch))
+        {
+            num = num * 10 + (ch - '0');
+        }
+    }
+    return num;
+}
+
+void BubbleSortRentalFee(vector<vector<string> >& data) {
+    for (size_t i = 0; i < data.size(); i++) {
+        for (size_t j = 0; j < data.size() - 1 - i; j++) {
+            // Extract numbers from the strings and convert them to integers
+            int num1 = stringToInteger(data[j][3]);
+            int num2 = stringToInteger(data[j + 1][3]);
+
+            if (num1 < num2) {
+                swap(data[j], data[j + 1]);
+            }
+        }
+    }
+}
+
+void displaySortedDataInPages(vector<vector<string> > &data, int numEntriesPerPage)
+{
+    // int numEntriesPerPage = 30;
+    int currentPage = 1;
+    int count = 0;
+
+    // Calculate the number of pages
+    int totalPages = (data.size() + numEntriesPerPage - 1) / numEntriesPerPage;
+
+
+    // Display the stored matching rows in a table
+    while (currentPage <= totalPages)
+    {
+        // Calculate the start and end indices for the current page
+        int startIndex = (currentPage - 1) * numEntriesPerPage;
+        int endIndex = min(startIndex + numEntriesPerPage, static_cast<int>(data.size()));
+
+        // for (size_t i = 0; i < endIndex; i++)
+        // {
+        //     // Bubble Sort the rental fee here
+        //     BubbleSortRentalFee(data, i, endIndex);
+        // }
+
+        // Sort the current 30 data entries based on the rental fee
+        vector<vector<string> > currentData(data.begin() + startIndex, data.begin() + endIndex);
+        BubbleSortRentalFee(currentData);
+
+        // Display the sorted data for the current page
+        for (size_t i = 0; i < currentData.size(); ++i) {
+            // Loop through the columns of the current row
+            for (const auto& value : currentData[i]) {
+                cout << value << " ";
+            }
+            cout << endl;
+
+            // Print the line of dashes after each row
+            cout << '\n' << string(30, '-') << endl;
+            count++;
+        }
+
+        // Ask the user if they want to see more entries
+        // cout << "Current Displayed Data = " << count << endl;
+        char choice;
+        cout << "Show more entries? (y/n): ";
+        cin >> choice;
+
+        if (choice == 'n' || choice == 'N')
+        {
+            break; // Exit the loop if the user doesn't want to see more entries
+        }
+        else if (choice == 'y' || choice == 'Y')
+        {
+            currentPage++; // Move to the next page
+        }
+        else
+        {
+            cout << "Invalid choice. Please enter 'y' or 'n' to continue." << endl;
+        }
     }
 }

@@ -25,7 +25,7 @@ class ManagerLinkedList
         ManagerDoublyNode<T> *tail;
         int size;
 
-        managerLinkedList()
+        ManagerLinkedList()
         {
             cout << "--- Constructing the Doubly LinkedList object ---" << endl;
             this->size = 0;
