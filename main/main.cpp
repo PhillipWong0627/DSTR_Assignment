@@ -31,6 +31,7 @@ bool managerLogin(string username, string password);
 int stringToInteger(const string &str);
 void displaySortedRentalFeeInPages(vector<vector<string> > &data, int numEntriesPerPage);
 void displaySortedLocationInPages(std::vector<std::vector<std::string> >& data, int numEntriesPerPage);
+void displaySortedSizeInPages(std::vector<std::vector<std::string> >& data, int numEntriesPerPage);
 
 string loginTenant();
 string currentUsername;
@@ -404,7 +405,7 @@ void sortTenant()
     cout << "Sort By" << endl;
     cout << "1) Rental Fee" << endl;
     cout << "2) Location" << endl;
-    cout << "3) Demo" << endl;
+    cout << "3) Size" << endl;
     cin >> choice;
 
     while (cin.fail() || choice < 1 || choice > 3)
@@ -415,7 +416,7 @@ void sortTenant()
         cout << "Incorrect Input!" << endl;
         cout << "1) Rental Fee" << endl;
         cout << "2) Location" << endl;
-        cout << "3) Demo" << endl;
+        cout << "3) Size" << endl;
         cout << "Please select: " << endl;
         cin >> choice;
     }
@@ -431,7 +432,7 @@ void sortTenant()
     }
     else if (choice == 3)
     {
-        cout << "demo" << endl;
+        displaySortedSizeInPages(data, 30);
     }
     else
     {
@@ -915,7 +916,7 @@ int stringToInteger(const string &str)
     {
         if (isdigit(ch))
         {
-            num = num * 10 + (ch - '0');
+            num = num * 10 + (ch - '0'); // to get the integer value of that digit
         }
     }
     return num;
@@ -1075,6 +1076,115 @@ void displaySortedLocationInPages(std::vector<std::vector<std::string> >& data, 
         
         // implementation of merge sort
         sortFunction.mergeSortLocation(currentData, indices, 0, indices.size() - 1);
+
+        // Display the sorted data for the current page
+        for (const auto& index : indices) {
+            for (const auto& value : currentData[index]) {
+                std::cout << value << " ";
+            }
+            std::cout << std::endl;
+            // Print the line of dashes after each row
+            std::cout << '\n' << std::string(30, '-') << std::endl;
+        }
+
+        // Ask the user if they want to see more entries
+        char choice;
+        std::cout << "Show more entries? (y/n): ";
+        std::cin >> choice;
+
+        if (choice == 'n' || choice == 'N') {
+            break; // Exit the loop if the user doesn't want to see more entries
+        } else if (choice == 'y' || choice == 'Y') {
+            currentPage++; // Move to the next page
+        } else {
+            std::cout << "Invalid choice. Please enter 'y' or 'n' to continue." << std::endl;
+        }
+    }
+}
+
+// Merge two sorted arrays into one sorted array
+void SortFunction::mergeSize(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int middle, int right) {
+    int n1 = middle - left + 1;
+    int n2 = right - middle;
+
+    std::vector<int> leftIndices(n1);
+    std::vector<int> rightIndices(n2);
+
+    for (int i = 0; i < n1; i++) {
+        leftIndices[i] = indices[left + i];
+    }
+
+    for (int j = 0; j < n2; j++) {
+        rightIndices[j] = indices[middle + 1 + j];
+    }
+
+    int i = 0, j = 0, k = left;
+
+    while (i < n1 && j < n2) {
+        // Extract the size square per feet strings for comparison
+        const string& size1_str = arr[leftIndices[i]][9]; // Assuming size is in the 6th element (index 5)
+        const string& size2_str = arr[rightIndices[j]][9];
+
+        // Convert the size strings to integers for comparison
+        int size1 = stringToInteger(size1_str);
+        int size2 = stringToInteger(size2_str);
+
+        if (size1 >= size2) { // Change the comparison to '>=' for descending order
+            indices[k] = leftIndices[i];
+            i++;
+        } else {
+            indices[k] = rightIndices[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        indices[k] = leftIndices[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        indices[k] = rightIndices[j];
+        j++;
+        k++;
+    }
+}
+
+// Merge Sort function for sorting data based on size square per feet
+void SortFunction::mergeSortSize(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int right) {
+    if (left >= right) {
+        return;
+    }
+
+    int middle = left + (right - left) / 2;
+    sortFunction.mergeSortSize(arr, indices, left, middle);
+    sortFunction.mergeSortSize(arr, indices, middle + 1, right);
+    sortFunction.mergeSize(arr, indices, left, middle, right);
+}
+
+// Function to display sorted data in pages
+void displaySortedSizeInPages(std::vector<std::vector<std::string> >& data, int numEntriesPerPage) {
+    // Calculate the number of pages
+    int totalPages = (data.size() + numEntriesPerPage - 1) / numEntriesPerPage;
+
+    // Display the stored matching rows in a table
+    int currentPage = 1;
+    while (currentPage <= totalPages) {
+        // Calculate the start and end indices for the current page
+        int startIndex = (currentPage - 1) * numEntriesPerPage;
+        int endIndex = std::min(startIndex + numEntriesPerPage, static_cast<int>(data.size()));
+
+        // Sort the current page data based on the size square per feet
+        std::vector<std::vector<std::string> > currentData(data.begin() + startIndex, data.begin() + endIndex);
+        std::vector<int> indices(currentData.size());
+        for (size_t i = 0; i < indices.size(); i++) {
+            indices[i] = i;
+        }
+
+        // Implementation of merge sort
+        sortFunction.mergeSortSize(currentData, indices, 0, indices.size() - 1);
 
         // Display the sorted data for the current page
         for (const auto& index : indices) {

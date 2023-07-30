@@ -62,8 +62,22 @@ vector<vector<string> > importdata()
 #include <string>
 #include <algorithm>
 
+int stringToInteger(const string &str)
+{
+    int num = 0;
+    for (char ch : str)
+    {
+        if (isdigit(ch))
+        {
+            num = num * 10 + (ch - '0');
+        }
+    }
+    return num;
+}
+
+
 // Merge two sorted arrays into one sorted array
-void mergeLocation(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int middle, int right) {
+void mergeSize(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int middle, int right) {
     int n1 = middle - left + 1;
     int n2 = right - middle;
 
@@ -81,11 +95,15 @@ void mergeLocation(std::vector<std::vector<std::string> >& arr, std::vector<int>
     int i = 0, j = 0, k = left;
 
     while (i < n1 && j < n2) {
-        // Extract the location strings for comparison
-        const string& location1 = arr[leftIndices[i]][4]; // Assuming location is in the 6th element (index 5)
-        const string& location2 = arr[rightIndices[j]][4];
+        // Extract the size square per feet strings for comparison
+        const string& size1_str = arr[leftIndices[i]][9]; // Assuming size is in the 6th element (index 5)
+        const string& size2_str = arr[rightIndices[j]][9];
 
-        if (location1 >= location2) {
+        // Convert the size strings to integers for comparison
+        int size1 = stringToInteger(size1_str);
+        int size2 = stringToInteger(size2_str);
+
+        if (size1 >= size2) { // Change the comparison to '>=' for descending order
             indices[k] = leftIndices[i];
             i++;
         } else {
@@ -108,20 +126,20 @@ void mergeLocation(std::vector<std::vector<std::string> >& arr, std::vector<int>
     }
 }
 
-// Merge Sort function for sorting data based on rental fee
-void mergeSortLocation(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int right) {
+// Merge Sort function for sorting data based on size square per feet
+void mergeSortSize(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int right) {
     if (left >= right) {
         return;
     }
 
     int middle = left + (right - left) / 2;
-    mergeSortLocation(arr, indices, left, middle);
-    mergeSortLocation(arr, indices, middle + 1, right);
-    mergeLocation(arr, indices, left, middle, right);
+    mergeSortSize(arr, indices, left, middle);
+    mergeSortSize(arr, indices, middle + 1, right);
+    mergeSize(arr, indices, left, middle, right);
 }
 
 // Function to display sorted data in pages
-void displaySortedLocationInPages(std::vector<std::vector<std::string> >& data, int numEntriesPerPage) {
+void displaySortedSizeInPages(std::vector<std::vector<std::string> >& data, int numEntriesPerPage) {
     // Calculate the number of pages
     int totalPages = (data.size() + numEntriesPerPage - 1) / numEntriesPerPage;
 
@@ -132,15 +150,15 @@ void displaySortedLocationInPages(std::vector<std::vector<std::string> >& data, 
         int startIndex = (currentPage - 1) * numEntriesPerPage;
         int endIndex = std::min(startIndex + numEntriesPerPage, static_cast<int>(data.size()));
 
-        // Sort the current page data based on the rental fee
+        // Sort the current page data based on the size square per feet
         std::vector<std::vector<std::string> > currentData(data.begin() + startIndex, data.begin() + endIndex);
         std::vector<int> indices(currentData.size());
         for (size_t i = 0; i < indices.size(); i++) {
             indices[i] = i;
         }
-        
-        // implementation of merge sort
-        mergeSortLocation(currentData, indices, 0, indices.size() - 1);
+
+        // Implementation of merge sort
+        mergeSortSize(currentData, indices, 0, indices.size() - 1);
 
         // Display the sorted data for the current page
         for (const auto& index : indices) {
@@ -171,8 +189,8 @@ int main() {
     // Import data
     std::vector<std::vector<std::string> > data = importdata();
 
-    // Display sorted data in pages
-    displaySortedLocationInPages(data, 30);
+    // Display sorted data in pages based on size square per feet
+    displaySortedSizeInPages(data, 30);
 
     return 0;
 }

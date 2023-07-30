@@ -23,4 +23,8 @@ public:
 
     void mergeSortLocation(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int right);
 
+    void mergeSize(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int middle, int right);
+
+    void mergeSortSize(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int right);
+
 };
