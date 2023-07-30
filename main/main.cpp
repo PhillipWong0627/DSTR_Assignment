@@ -29,8 +29,8 @@ void adminmenu();
 void registermanager();
 bool managerLogin(string username, string password);
 int stringToInteger(const string &str);
-void BubbleSortRentalFee(vector<vector<string> >& data);
-void displaySortedDataInPages(vector<vector<string> > &data, int numEntriesPerPage);
+void displaySortedRentalFeeInPages(vector<vector<string> > &data, int numEntriesPerPage);
+void displaySortedLocationInPages(std::vector<std::vector<std::string> >& data, int numEntriesPerPage);
 
 string loginTenant();
 string currentUsername;
@@ -423,11 +423,11 @@ void sortTenant()
 
     if(choice == 1)
     {
-        displaySortedDataInPages(data, 30);
+        displaySortedRentalFeeInPages(data, 30);
     }
     else if (choice == 2)
     {
-        cout << "demo" << endl;
+        displaySortedLocationInPages(data, 30);
     }
     else if (choice == 3)
     {
@@ -502,7 +502,7 @@ void searchDetails(int choice)
 {
 
     // Import data from CSV
-    vector<vector<string>> data = importdata();
+    vector<vector<string> > data = importdata();
 
     string targetProperty;
     string result;
@@ -542,7 +542,7 @@ void searchDetails(int choice)
     // Assuming you have read the CSV file and stored the data in the 'data' vector
     string targetName = targetProperty; // Specify the name you want to search for
 
-    vector<vector<string>> matchingRows; // Vector to store matching rows
+    vector<vector<string> > matchingRows; // Vector to store matching rows
 
     // // Search for the target name and store the matching rows
     for (const auto &row : data)
@@ -588,7 +588,7 @@ void displayPorperty()
     // DoublyLinkedList<string> favList;
 
     // Import data from CSV
-    vector<vector<string>> data = importdata();
+    vector<vector<string> > data = importdata();
 
     int numEntriesPerPage = 30;
     int currentPage = 1;
@@ -640,12 +640,12 @@ void saveFavorite(){
     string targetProperty = inputadsid();
 
     // // Import data from CSV
-    vector<vector<string>> data = importdata();
+    vector<vector<string> > data = importdata();
 
     // // Assuming you have read the CSV file and stored the data in the 'data' vector
     string targetName = targetProperty; // Specify the name you want to search for
 
-    vector<vector<string>> matchingRows; // Vector to store matching rows
+    vector<vector<string> > matchingRows; // Vector to store matching rows
 
     // // Search for the target name and store the matching rows
     for (const auto &row : data)
@@ -921,7 +921,7 @@ int stringToInteger(const string &str)
     return num;
 }
 
-void BubbleSortRentalFee(vector<vector<string> >& data) {
+void SortFunction::BubbleSortRentalFee(vector<vector<string> >& data) {
     for (size_t i = 0; i < data.size(); i++) {
         for (size_t j = 0; j < data.size() - 1 - i; j++) {
             // Extract numbers from the strings and convert them to integers
@@ -935,7 +935,7 @@ void BubbleSortRentalFee(vector<vector<string> >& data) {
     }
 }
 
-void displaySortedDataInPages(vector<vector<string> > &data, int numEntriesPerPage)
+void displaySortedRentalFeeInPages(vector<vector<string> > &data, int numEntriesPerPage)
 {
     // int numEntriesPerPage = 30;
     int currentPage = 1;
@@ -960,7 +960,7 @@ void displaySortedDataInPages(vector<vector<string> > &data, int numEntriesPerPa
 
         // Sort the current 30 data entries based on the rental fee
         vector<vector<string> > currentData(data.begin() + startIndex, data.begin() + endIndex);
-        BubbleSortRentalFee(currentData);
+        sortFunction.BubbleSortRentalFee(currentData);
 
         // Display the sorted data for the current page
         for (size_t i = 0; i < currentData.size(); ++i) {
@@ -992,6 +992,111 @@ void displaySortedDataInPages(vector<vector<string> > &data, int numEntriesPerPa
         else
         {
             cout << "Invalid choice. Please enter 'y' or 'n' to continue." << endl;
+        }
+    }
+}
+
+// Merge two sorted arrays into one sorted array
+void SortFunction::mergeLocation(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int middle, int right) {
+    int n1 = middle - left + 1;
+    int n2 = right - middle;
+
+    std::vector<int> leftIndices(n1);
+    std::vector<int> rightIndices(n2);
+
+    for (int i = 0; i < n1; i++) {
+        leftIndices[i] = indices[left + i];
+    }
+
+    for (int j = 0; j < n2; j++) {
+        rightIndices[j] = indices[middle + 1 + j];
+    }
+
+    int i = 0, j = 0, k = left;
+
+    while (i < n1 && j < n2) {
+        // Extract the location strings for comparison
+        const string& location1 = arr[leftIndices[i]][4]; // Assuming location is in the 6th element (index 5)
+        const string& location2 = arr[rightIndices[j]][4];
+
+        if (location1 >= location2) {
+            indices[k] = leftIndices[i];
+            i++;
+        } else {
+            indices[k] = rightIndices[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        indices[k] = leftIndices[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        indices[k] = rightIndices[j];
+        j++;
+        k++;
+    }
+}
+
+// Merge Sort function for sorting data based on rental fee
+void SortFunction::mergeSortLocation(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int right) {
+    if (left >= right) {
+        return;
+    }
+
+    int middle = left + (right - left) / 2;
+    sortFunction.mergeSortLocation(arr, indices, left, middle);
+    sortFunction.mergeSortLocation(arr, indices, middle + 1, right);
+    sortFunction.mergeLocation(arr, indices, left, middle, right);
+}
+
+// Function to display sorted data in pages
+void displaySortedLocationInPages(std::vector<std::vector<std::string> >& data, int numEntriesPerPage) {
+    // Calculate the number of pages
+    int totalPages = (data.size() + numEntriesPerPage - 1) / numEntriesPerPage;
+
+    // Display the stored matching rows in a table
+    int currentPage = 1;
+    while (currentPage <= totalPages) {
+        // Calculate the start and end indices for the current page
+        int startIndex = (currentPage - 1) * numEntriesPerPage;
+        int endIndex = std::min(startIndex + numEntriesPerPage, static_cast<int>(data.size()));
+
+        // Sort the current page data based on the rental fee
+        std::vector<std::vector<std::string> > currentData(data.begin() + startIndex, data.begin() + endIndex);
+        std::vector<int> indices(currentData.size());
+        for (size_t i = 0; i < indices.size(); i++) {
+            indices[i] = i;
+        }
+        
+        // implementation of merge sort
+        sortFunction.mergeSortLocation(currentData, indices, 0, indices.size() - 1);
+
+        // Display the sorted data for the current page
+        for (const auto& index : indices) {
+            for (const auto& value : currentData[index]) {
+                std::cout << value << " ";
+            }
+            std::cout << std::endl;
+            // Print the line of dashes after each row
+            std::cout << '\n' << std::string(30, '-') << std::endl;
+        }
+
+        // Ask the user if they want to see more entries
+        char choice;
+        std::cout << "Show more entries? (y/n): ";
+        std::cin >> choice;
+
+        if (choice == 'n' || choice == 'N') {
+            break; // Exit the loop if the user doesn't want to see more entries
+        } else if (choice == 'y' || choice == 'Y') {
+            currentPage++; // Move to the next page
+        } else {
+            std::cout << "Invalid choice. Please enter 'y' or 'n' to continue." << std::endl;
         }
     }
 }

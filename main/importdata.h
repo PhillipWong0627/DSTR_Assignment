@@ -46,8 +46,8 @@ using namespace std;
 //     return data;
 // }
 
-vector<vector<string>> importdata() {
-    vector<vector<string>> data;  // 2D vector to store CSV data
+vector<vector<string> > importdata() {
+    vector<vector<string> > data;  // 2D vector to store CSV data
 
     ifstream file("data.csv");  // Replace "data.csv" with your CSV file name
 

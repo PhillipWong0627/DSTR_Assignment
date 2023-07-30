@@ -17,28 +17,10 @@ public:
              << endl;
     }
 
-    void BubbleSort(int arrayToBeSort[], int arraySize);
+    void BubbleSortRentalFee(vector<vector<string> >& data);
 
-    // void SortFunction::BubbleSort(int arrayToBeSort[], int arraySize)
-    // {
-    //     for (int i = 0; i < arraySize; i++)
-    //     {
-    //         for (int j = 0; j < arraySize - 1 - i; j++)
-    //         {
-    //             if (arrayToBeSort[j] > arrayToBeSort[j + 1])
-    //             {
-    //                 swap(arrayToBeSort[j], arrayToBeSort[j + 1]);
-    //             }
-    //         }
-    //     }
+    void mergeLocation(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int middle, int right);
 
-    //     cout << "After sort : " << endl;
-    //     for (int i = 0; i < arraySize; i++)
-    //     {
-    //         cout << arrayToBeSort[i] << endl;
-    //     }
-    // }
+    void mergeSortLocation(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int right);
 
-    void merge(int arrayToBeSort[], int left, int mid, int right);
-    void MergeSort(int arrayToBeSort[], int begin, int end);
 };
