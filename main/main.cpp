@@ -281,11 +281,14 @@ void adminmenu()
         else if (choice == 3)
         {
             // displaytenants();
+            //tenantList.displayAll();
+            tenantList.diplayFilter("active");
             break;
         }
         else if (choice == 4)
         {
             // displaytenants();
+            tenantList.diplayFilter("inactive");
             break;
         }
         else if (choice == 5)

@@ -166,18 +166,25 @@ public:
     string password;
     string status;
 
-    // Default constructor
-    Tenant() : username(""), password("") {}
+    // // Default constructor
+    // Tenant() : username(""), password("") {}
 
-    // Parameterized constructor
-    Tenant(const string& username, const string& password) : username(username), password(password) {}
+    // // Parameterized constructor
+    // Tenant(const string& username, const string& password) : username(username), password(password) {}
+
+    // Default constructor
+    Tenant() : username(""), password(""), status("") {}
+
+    // Parameterized constructor taking username, password, and status
+    Tenant(const string& username, const string& password, const string& status)
+        : username(username), password(password), status(status) {}
 };
 
 class TenantList {
 public:
     DoublyLinkedList<Tenant> tenantList;
 
-    bool registerTenant(const string& username, const string& password, const string & status) {
+    bool registerTenant(const string& username, const string& password, const string& status) {
         // Check if the username already exists in the linked list
         DoublyNode<Tenant>* current = tenantList.head;
         while (current != nullptr) {
@@ -188,7 +195,7 @@ public:
         }
 
         // If the username does not exist, create a new tenant and insert it into the linked list
-        Tenant newTenant(username, password);
+        Tenant newTenant(username, password, status);
         tenantList.insertAtbeginning(newTenant);
 
         return true;
@@ -224,8 +231,7 @@ public:
 
         cout << "--- DISPLAY ALL REGISTERED TENANTS ---" << endl;
         while (current != nullptr) {
-            cout << "Username: " << current->data.username << ", Password: " << current->data.password;
-            cout << ", Status: " << current->data.status << endl;
+            cout << "Username: " << current->data.username << ", Password: " << current->data.password << ", Status: " << current->data.status << endl;
 
             found = true; // Set flag to true if at least one tenant is found
             current = current->next;
@@ -236,6 +242,28 @@ public:
         }
         cout << endl;
     }
+
+    // Assuming 'status' is an attribute of the Tenant class
+    void diplayFilter(const string& filterStatus = "") const {
+        DoublyNode<Tenant>* current = tenantList.head;
+        bool found = false; // Flag to track if any tenant is found
+
+        cout << "--- DISPLAY ALL REGISTERED TENANTS ---" << endl;
+        while (current != nullptr) {
+            if (filterStatus.empty() || current->data.status == filterStatus) {
+                cout << "Username: " << current->data.username << ", Password: " << current->data.password << ", Status: " << current->data.status << endl;
+
+                found = true; // Set flag to true if at least one tenant is found
+            }
+            current = current->next;
+        }
+
+        if (!found) {
+            cout << "No tenants matching the filter criteria!" << endl; // Display this message if no tenants are found matching the filter criteria
+        }
+        cout << endl;
+    }
+
 
     Tenant *searchTenant(const string &username) const {
         DoublyNode<Tenant> *current = tenantList.head;
