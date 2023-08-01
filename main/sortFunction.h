@@ -19,12 +19,14 @@ public:
 
     void BubbleSortRentalFee(vector<vector<string> >& data);
 
-    void mergeLocation(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int middle, int right);
+    void BubbleSortPropertyId(vector<vector<string> >& data, chrono::high_resolution_clock::time_point& start_time, chrono::high_resolution_clock::time_point& end_time);
 
-    void mergeSortLocation(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int right);
+    void mergeLocation(vector<vector<string> >& arr, vector<int>& indices, int left, int middle, int right);
 
-    void mergeSize(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int middle, int right);
+    void mergeSortLocation(vector<vector<string> >& arr, vector<int>& indices, int left, int right);
 
-    void mergeSortSize(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int right);
+    void mergeSize(vector<vector<string> >& arr, vector<int>& indices, int left, int middle, int right);
+
+    void mergeSortSize(vector<vector<string> >& arr, vector<int>& indices, int left, int right);
 
 };

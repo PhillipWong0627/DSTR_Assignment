@@ -3,194 +3,241 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <iomanip>
 #include <algorithm>
+#include <chrono> // Include the chrono library
 
 using namespace std;
 
-vector<vector<string> > importdata()
-{
-    // data variable stores the csv file
-    vector<vector<string> > data; // 2D vector to store CSV data
-
-    cout << "importing data" << endl;
+// Function to import data from CSV file
+vector<vector<string> > importdata() {
+    vector<vector<string> > data;
 
     ifstream file("data.csv"); // Replace "data.csv" with your CSV file name
 
-    if (file.is_open())
-    {
+    if (file.is_open()) {
         string line;
-        while (getline(file, line))
-        {
-
-            vector<string> row; // Vector to store each row of data
-
-            istringstream ss(line); // Use istringstream to split the line
-
+        while (getline(file, line)) {
+            vector<string> row;
+            istringstream ss(line);
             string value;
-            while (getline(ss, value, ','))
-            {
-                // If the value contains semicolons (due to previous replacements), convert them back to commas
+            while (getline(ss, value, ',')) {
                 size_t pos;
-                while ((pos = value.find(';')) != string::npos)
-                {
+                while ((pos = value.find(';')) != string::npos) {
                     value.replace(pos, 1, ",");
                 }
-                if (value.empty())
-                {                // Check if the value is empty
-                    value = "-"; // Replace empty value with hyphen
+                if (value.empty()) {
+                    value = "-";
                 }
-                row.push_back(value); // Add each value to the row vector
+                row.push_back(value);
             }
-
-            data.push_back(row); // Add the row to the data vector
+            data.push_back(row);
         }
-
         file.close();
-    }
-    else
-    {
+    } else {
         cout << "Unable to open the file." << endl;
-        return data; // Return empty data vector on error
     }
 
     return data;
 }
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
-
-int stringToInteger(const string &str)
-{
+// convert the string to the integer type
+int stringToInteger(const string &str) {
     int num = 0;
-    for (char ch : str)
-    {
-        if (isdigit(ch))
-        {
-            num = num * 10 + (ch - '0');
+    for (char ch : str) {
+        if (isdigit(ch)) {
+            num = num * 10 + (ch - '0'); // to get the integer value of that digit
         }
     }
     return num;
 }
 
+void BubbleSortPropertyId(vector<vector<string> >& data, chrono::high_resolution_clock::time_point& start_time, chrono::high_resolution_clock::time_point& end_time) {
+    // Record the start time before the sorting begins
+    start_time = chrono::high_resolution_clock::now();
 
-// Merge two sorted arrays into one sorted array
-void mergeSize(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int middle, int right) {
-    int n1 = middle - left + 1;
-    int n2 = right - middle;
+    for (size_t i = 0; i < data.size(); i++) {
+        for (size_t j = 0; j < data.size() - 1 - i; j++) {
 
-    std::vector<int> leftIndices(n1);
-    std::vector<int> rightIndices(n2);
+            // Extract numbers from the strings and convert them to integers
+            int num1 = stringToInteger(data[j][0]);
+            int num2 = stringToInteger(data[j + 1][0]);
 
-    for (int i = 0; i < n1; i++) {
-        leftIndices[i] = indices[left + i];
-    }
+            // cout << "num1 = " << num1 << endl;
+            // cout << "num2 = " << num2 << endl;
 
-    for (int j = 0; j < n2; j++) {
-        rightIndices[j] = indices[middle + 1 + j];
-    }
-
-    int i = 0, j = 0, k = left;
-
-    while (i < n1 && j < n2) {
-        // Extract the size square per feet strings for comparison
-        const string& size1_str = arr[leftIndices[i]][9]; // Assuming size is in the 6th element (index 5)
-        const string& size2_str = arr[rightIndices[j]][9];
-
-        // Convert the size strings to integers for comparison
-        int size1 = stringToInteger(size1_str);
-        int size2 = stringToInteger(size2_str);
-
-        if (size1 >= size2) { // Change the comparison to '>=' for descending order
-            indices[k] = leftIndices[i];
-            i++;
-        } else {
-            indices[k] = rightIndices[j];
-            j++;
+            // swap the entire row of data
+            if (num1 > num2) {
+                swap(data[j], data[j + 1]);
+            }
         }
-        k++;
     }
 
-    while (i < n1) {
-        indices[k] = leftIndices[i];
-        i++;
-        k++;
-    }
-
-    while (j < n2) {
-        indices[k] = rightIndices[j];
-        j++;
-        k++;
-    }
+    // Record the end time after the sorting is done
+    end_time = chrono::high_resolution_clock::now();
 }
 
-// Merge Sort function for sorting data based on size square per feet
-void mergeSortSize(std::vector<std::vector<std::string> >& arr, std::vector<int>& indices, int left, int right) {
-    if (left >= right) {
-        return;
+// void binarySearchAllRentalFee(vector<vector<string> > &data, int targetFee)
+// {
+//     vector<vector<string> > resultFound;
+//     int low, high;
+//     low = 0;
+//     high = data.size() - 1;
+
+//     while(low <= high)
+//     {
+//         int mid = (low + high) / 2;
+
+//          // Extract the rental fee from the string and convert it to an integer
+//         int midFee = stringToInteger(data[mid][3]); 
+
+//         if(midFee == targetFee)
+//         {
+//             resultFound.push_back()
+//         }
+
+//     }
+// }
+
+int binarySearchFirst(const vector<vector<string> >& data, int propertyId, chrono::high_resolution_clock::time_point& start_time, chrono::high_resolution_clock::time_point& end_time) {
+
+    // Record the start time before the sorting begins
+    start_time = chrono::high_resolution_clock::now();
+    
+    int result = -1;
+
+    int low, high;
+    low = 0;
+    high = data.size() - 1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        // Extract the rental fee from the string and convert it to an integer
+        int midPropertyId = stringToInteger(data[mid][0]); // Assuming the rental fee is in the 4th element (index 3)
+        cout <<  "midPropertyId = " << midPropertyId << endl;
+        if (midPropertyId == propertyId) {
+            // Found a matching rental fee, store the index and continue searching on the low side
+            result = mid;
+            high = mid - 1;
+        } else if (midPropertyId < propertyId) {
+            low = mid + 1; // Target fee is in the high half of the current range
+        } else {
+            high = mid - 1; // Target fee is in the left half of the current range
+        }
     }
 
-    int middle = left + (right - left) / 2;
-    mergeSortSize(arr, indices, left, middle);
-    mergeSortSize(arr, indices, middle + 1, right);
-    mergeSize(arr, indices, left, middle, right);
+    // Record the end time after the binary search is done
+    end_time = chrono::high_resolution_clock::now();
+
+    return result;
+
 }
 
-// Function to display sorted data in pages
-void displaySortedSizeInPages(std::vector<std::vector<std::string> >& data, int numEntriesPerPage) {
+
+void displaySortedPropertyIdInPages(vector<vector<string> > &data, int numEntriesPerPage)
+{
+    int currentPage = 1;
+    int count = 0;
+
     // Calculate the number of pages
     int totalPages = (data.size() + numEntriesPerPage - 1) / numEntriesPerPage;
 
+
     // Display the stored matching rows in a table
-    int currentPage = 1;
-    while (currentPage <= totalPages) {
+    while (currentPage <= totalPages)
+    {
         // Calculate the start and end indices for the current page
         int startIndex = (currentPage - 1) * numEntriesPerPage;
-        int endIndex = std::min(startIndex + numEntriesPerPage, static_cast<int>(data.size()));
+        int endIndex = min(startIndex + numEntriesPerPage, static_cast<int>(data.size()));
 
-        // Sort the current page data based on the size square per feet
-        std::vector<std::vector<std::string> > currentData(data.begin() + startIndex, data.begin() + endIndex);
-        std::vector<int> indices(currentData.size());
-        for (size_t i = 0; i < indices.size(); i++) {
-            indices[i] = i;
-        }
+        // Sort the current 30 data entries based on the rental fee
+        vector<vector<string> > currentData(data.begin() + startIndex, data.begin() + endIndex);
+        chrono::high_resolution_clock::time_point sort_start, sort_end;
+        BubbleSortPropertyId(currentData, sort_start, sort_end);
 
-        // Implementation of merge sort
-        mergeSortSize(currentData, indices, 0, indices.size() - 1);
+       // Calculate the duration of sorting in seconds
+        auto sort_duration = chrono::duration<double>(sort_end - sort_start).count();
+
+        
+
 
         // Display the sorted data for the current page
-        for (const auto& index : indices) {
-            for (const auto& value : currentData[index]) {
-                std::cout << value << " ";
+        for (size_t i = 1; i < currentData.size(); ++i) {
+            // Loop through the columns of the current row
+            for (const auto& value : currentData[i]) {
+                cout << value << " ";
             }
-            std::cout << std::endl;
+            cout << endl;
+
             // Print the line of dashes after each row
-            std::cout << '\n' << std::string(30, '-') << std::endl;
+            cout << '\n' << string(30, '-') << endl;
+            count++;
         }
 
-        // Ask the user if they want to see more entries
-        char choice;
-        std::cout << "Show more entries? (y/n): ";
-        std::cin >> choice;
+        // Display the duration of sorting
+        cout << "Sorting time using bubble sort : " << sort_duration << " seconds" << endl;
 
-        if (choice == 'n' || choice == 'N') {
-            break; // Exit the loop if the user doesn't want to see more entries
-        } else if (choice == 'y' || choice == 'Y') {
-            currentPage++; // Move to the next page
+        // Ask the user to enter a rental fee to search for
+        int propertyId;
+        cout << "Enter the property id to search for: ";
+        cin >> propertyId;
+
+        chrono::high_resolution_clock::time_point search_start, search_end;
+
+        // Perform binary search to find the first occurrence
+        int result = binarySearchFirst(currentData, propertyId, search_start, search_end);
+
+        // Display the search result
+        if (result != -1) {
+            cout << "Property ID " << propertyId << " found at index: " << result << endl;
+            // Display the details for the matching row
+            for (const auto& value : data[result]) {
+                cout << value << " ";
+            }
+            cout << endl;
         } else {
-            std::cout << "Invalid choice. Please enter 'y' or 'n' to continue." << std::endl;
+            cout << "Property ID " << propertyId << " not found in this page." << endl;
+        }
+
+        // Calculate the duration of binary search in seconds
+        auto search_duration = chrono::duration<double>(search_end - search_start).count();
+
+        // Display the duration of binary search in seconds
+        cout << "Search time using binary search: " << search_duration << " seconds" << endl;
+
+
+        // Ask the user if they want to see more entries
+        // cout << "Current Displayed Data = " << count << endl;
+        char choice;
+        cout << "Show more entries? (y/n): ";
+        cin >> choice;
+
+        if (choice == 'n' || choice == 'N')
+        {
+            break; // Exit the loop if the user doesn't want to see more entries
+        }
+        else if (choice == 'y' || choice == 'Y')
+        {
+            currentPage++; // Move to the next page
+        }
+        else
+        {
+            cout << "Invalid choice. Please enter 'y' or 'n' to continue." << endl;
         }
     }
 }
 
-int main() {
-    // Import data
-    std::vector<std::vector<std::string> > data = importdata();
+int main()
+{
 
-    // Display sorted data in pages based on size square per feet
-    displaySortedSizeInPages(data, 30);
+    vector<vector<string> > data = importdata();
+
+    // remove first row
+    if (!data.empty()) {
+        data.erase(data.begin()); // Removes the first row (element) from the data vector
+    }
+
+    // set how many data entries to the algorithm
+    displaySortedPropertyIdInPages(data, 5000);
 
     return 0;
 }
