@@ -169,6 +169,8 @@ class ManagerLinkedList
            
             cout << endl;
         }
+
+        
         void changestatus(T name){
             ManagerDoublyNode<T> *curr = head;
             bool found = false;

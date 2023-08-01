@@ -291,15 +291,29 @@ void adminmenu()
             
         }
         else if (choice == 3)
-        {
+        {   int input;
+            cout<<endl;
+            cout<< "select 1 of filter tenant with active"<<endl;
+            cout<< "select 2 of filter tenant with inactive"<<endl;
+
+            cin>>input;
             
-            tenantList.diplayFilter("active");
-            break;
+            if(input ==1){
+
+                tenantList.diplayFilter("active");
+
+            }else if(input ==2){
+                tenantList.diplayFilter("inactive");
+                
+            }
+
+            adminmenu();
+
         }
         else if (choice == 4)
         {
-            // displaytenants();
-            tenantList.diplayFilter("inactive");
+            
+           
             break;
         }
         else if (choice == 5)
