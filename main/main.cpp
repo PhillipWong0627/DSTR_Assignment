@@ -434,15 +434,15 @@ void sortTenant()
 
     if(choice == 1)
     {
-        displaySortedRentalFeeInPages(data, 30);
+        displaySortedRentalFeeInPages(data, 100);
     }
     else if (choice == 2)
     {
-        displaySortedLocationInPages(data, 30);
+        displaySortedLocationInPages(data, 100);
     }
     else if (choice == 3)
     {
-        displaySortedSizeInPages(data, 30);
+        displaySortedSizeInPages(data, 100);
     }
     else
     {
@@ -942,7 +942,11 @@ int stringToInteger(const string &str)
     return num;
 }
 
-void SortFunction::BubbleSortRentalFee(vector<vector<string> >& data) {
+void SortFunction::BubbleSortRentalFee(vector<vector<string> >& data, chrono::high_resolution_clock::time_point& start_time, chrono::high_resolution_clock::time_point& end_time) 
+{
+    // Record the start time before the sorting begins
+    start_time = chrono::high_resolution_clock::now();
+
     for (size_t i = 0; i < data.size(); i++) {
         for (size_t j = 0; j < data.size() - 1 - i; j++) {
             // Extract numbers from the strings and convert them to integers
@@ -954,6 +958,9 @@ void SortFunction::BubbleSortRentalFee(vector<vector<string> >& data) {
             }
         }
     }
+
+    // Record the end time after the sorting is done
+    end_time = chrono::high_resolution_clock::now();
 }
 
 void displaySortedRentalFeeInPages(vector<vector<string> > &data, int numEntriesPerPage)
@@ -979,9 +986,15 @@ void displaySortedRentalFeeInPages(vector<vector<string> > &data, int numEntries
         //     BubbleSortRentalFee(data, i, endIndex);
         // }
 
+        // calculate execution time
+        chrono::high_resolution_clock::time_point sort_start, sort_end;
+
         // Sort the current 30 data entries based on the rental fee
         vector<vector<string> > currentData(data.begin() + startIndex, data.begin() + endIndex);
-        sortFunction.BubbleSortRentalFee(currentData);
+        sortFunction.BubbleSortRentalFee(currentData, sort_start, sort_end);
+
+        // Calculate the duration of sorting in seconds
+        auto sort_duration = chrono::duration<double>(sort_end - sort_start).count();
 
         // Display the sorted data for the current page
         for (size_t i = 1; i < currentData.size(); ++i) {
@@ -995,6 +1008,10 @@ void displaySortedRentalFeeInPages(vector<vector<string> > &data, int numEntries
             cout << '\n' << string(30, '-') << endl;
             count++;
         }
+
+        // Display the duration of sorting
+        cout << "Sorting time using bubble sort : " << sort_duration << " seconds" << endl;
+
 
         // Ask the user if they want to see more entries
         // cout << "Current Displayed Data = " << count << endl;
@@ -1064,15 +1081,22 @@ void SortFunction::mergeLocation(vector<vector<string> >& arr, vector<int>& indi
 }
 
 // Merge Sort function for sorting data based on rental fee
-void SortFunction::mergeSortLocation(vector<vector<string> >& arr, vector<int>& indices, int left, int right) {
+void SortFunction::mergeSortLocation(vector<vector<string> >& arr, vector<int>& indices, int left, int right, chrono::high_resolution_clock::time_point& start_time, chrono::high_resolution_clock::time_point& end_time) 
+{
+    // Record the start time before the sorting begins
+    start_time = chrono::high_resolution_clock::now();
+    
     if (left >= right) {
         return;
     }
 
     int middle = left + (right - left) / 2;
-    sortFunction.mergeSortLocation(arr, indices, left, middle);
-    sortFunction.mergeSortLocation(arr, indices, middle + 1, right);
+    sortFunction.mergeSortLocation(arr, indices, left, middle, start_time, end_time);
+    sortFunction.mergeSortLocation(arr, indices, middle + 1, right, start_time, end_time);
     sortFunction.mergeLocation(arr, indices, left, middle, right);
+
+    // Record the end time after the binary search is done
+    end_time = chrono::high_resolution_clock::now();
 }
 
 // Function to display sorted data in pages
@@ -1093,9 +1117,15 @@ void displaySortedLocationInPages(vector<vector<string> >& data, int numEntriesP
         for (size_t i = 0; i < indices.size(); i++) {
             indices[i] = i;
         }
+
+        // calculate execution time
+        chrono::high_resolution_clock::time_point sort_start, sort_end;
         
         // implementation of merge sort
-        sortFunction.mergeSortLocation(currentData, indices, 0, indices.size() - 1);
+        sortFunction.mergeSortLocation(currentData, indices, 0, indices.size() - 1, sort_start, sort_end);
+
+        // Calculate the duration of sorting in seconds
+        auto sort_duration = chrono::duration<double>(sort_end - sort_start).count();
 
         // Display the sorted data for the current page
         for (const auto& index : indices) {
@@ -1106,6 +1136,9 @@ void displaySortedLocationInPages(vector<vector<string> >& data, int numEntriesP
             // Print the line of dashes after each row
             cout << '\n' << string(30, '-') << endl;
         }
+
+        // Display the duration of sorting
+        cout << "Sorting time using merge sort : " << sort_duration << " seconds" << endl;
 
         // Ask the user if they want to see more entries
         char choice;
@@ -1173,15 +1206,22 @@ void SortFunction::mergeSize(vector<vector<string> >& arr, vector<int>& indices,
 }
 
 // Merge Sort function for sorting data based on size square per feet
-void SortFunction::mergeSortSize(vector<vector<string> >& arr, vector<int>& indices, int left, int right) {
+void SortFunction::mergeSortSize(vector<vector<string> >& arr, vector<int>& indices, int left, int right, chrono::high_resolution_clock::time_point& start_time, chrono::high_resolution_clock::time_point& end_time) 
+{
+    // Record the start time before the sorting begins
+    start_time = chrono::high_resolution_clock::now();
+
     if (left >= right) {
         return;
     }
 
     int middle = left + (right - left) / 2;
-    sortFunction.mergeSortSize(arr, indices, left, middle);
-    sortFunction.mergeSortSize(arr, indices, middle + 1, right);
+    sortFunction.mergeSortSize(arr, indices, left, middle, start_time, end_time);
+    sortFunction.mergeSortSize(arr, indices, middle + 1, right, start_time, end_time);
     sortFunction.mergeSize(arr, indices, left, middle, right);
+
+    // Record the end time after the binary search is done
+    end_time = chrono::high_resolution_clock::now();
 }
 
 // Function to display sorted data in pages
@@ -1203,8 +1243,14 @@ void displaySortedSizeInPages(vector<vector<string> >& data, int numEntriesPerPa
             indices[i] = i;
         }
 
+        // calculate execution time
+        chrono::high_resolution_clock::time_point sort_start, sort_end;
+
         // Implementation of merge sort
-        sortFunction.mergeSortSize(currentData, indices, 0, indices.size() - 1);
+        sortFunction.mergeSortSize(currentData, indices, 0, indices.size() - 1, sort_start, sort_end);
+
+        // Calculate the duration of sorting in seconds
+        auto sort_duration = chrono::duration<double>(sort_end - sort_start).count();
 
         // Display the sorted data for the current page
         for (const auto& index : indices) {
@@ -1215,6 +1261,11 @@ void displaySortedSizeInPages(vector<vector<string> >& data, int numEntriesPerPa
             // Print the line of dashes after each row
             cout << '\n' << string(30, '-') << endl;
         }
+
+        // Display the duration of sorting
+        cout << "Sorting time using merge sort : " << sort_duration << " seconds" << endl;
+
+        
 
         // Ask the user if they want to see more entries
         char choice;
@@ -1308,9 +1359,11 @@ void displaySortedPropertyIdInPages(vector<vector<string> > &data, int numEntrie
         int startIndex = (currentPage - 1) * numEntriesPerPage;
         int endIndex = min(startIndex + numEntriesPerPage, static_cast<int>(data.size()));
 
+        // calculate execution time
+        chrono::high_resolution_clock::time_point sort_start, sort_end;
+
         // Sort the current 30 data entries based on the rental fee
         vector<vector<string> > currentData(data.begin() + startIndex, data.begin() + endIndex);
-        chrono::high_resolution_clock::time_point sort_start, sort_end;
         sortFunction.BubbleSortPropertyId(currentData, sort_start, sort_end);
 
        // Calculate the duration of sorting in seconds
