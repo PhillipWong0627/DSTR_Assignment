@@ -259,7 +259,8 @@ void loginAdmin()
 void adminmenu()
 {
     int choice;
-
+    string name;
+    
     cout << "1. Add New Manager" << endl;
     cout << "2. Modify Manager Status" << endl;
     cout << "3. Display Tenants" << endl;
@@ -277,16 +278,21 @@ void adminmenu()
         }
         else if (choice == 2)
         {   
-            cout<< " Managers list "<<endl;
-            managerlist.showForward();
-            adminmenu();
-            // updatestatus();
-            break;
+            cout<<endl<< " Managers list "<<endl;
+            if(managerlist.showForwardandvalidate()== true){
+                cout<<endl<< " Enter the name to change the status "<<endl;
+                cin>>name;
+                managerlist.changestatus(name);
+                adminmenu();
+            }else{
+                adminmenu();
+            }
+            
+            
         }
         else if (choice == 3)
         {
-            // displaytenants();
-            //tenantList.displayAll();
+            
             tenantList.diplayFilter("active");
             break;
         }
