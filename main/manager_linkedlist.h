@@ -128,15 +128,68 @@ class ManagerLinkedList
             
         }
         void showForward()
-        {
+        {   
             ManagerDoublyNode<T> *curr = head;
             cout << "\n--- DISPLAY LINKED LIST [FORWARD] = " << size << " elements ---" << endl;
-            while (curr != nullptr)
+            if(curr == nullptr){
+                cout<< "No Managers Record" << endl;
+               
+               
+            }else{
+                while (curr != nullptr)
             {
                 cout << curr->name << " ";
                 cout << curr->password<< " ";
                 cout << curr->status << endl; 
                 curr = curr->next;
+            }
+            }
+           
+            cout << endl;
+        }
+        bool showForwardandvalidate()
+        {   
+            ManagerDoublyNode<T> *curr = head;
+            cout << "\n--- DISPLAY LINKED LIST [FORWARD] = " << size << " elements ---" << endl;
+            if(curr ==nullptr){
+                cout<< "No Managers Record" << endl;
+                cout << endl;
+                return false;
+               
+            }else{
+                    while (curr != nullptr)
+                {
+                    cout << curr->name << " ";
+                    cout << curr->password<< " ";
+                    cout << curr->status << endl; 
+                    curr = curr->next;
+                }
+                return true;
+            }
+           
+            cout << endl;
+        }
+
+        
+        void changestatus(T name){
+            ManagerDoublyNode<T> *curr = head;
+            bool found = false;
+            while (curr!=nullptr){
+                if(curr->name == name){
+                    if(curr->status =="active"){
+                        curr->status="inactive";
+                    }else{
+                        curr->status="active";
+                    }  
+                    cout <<curr->name<< "-> Current Status =" <<curr->status << endl;
+                    found = true;
+                   
+                }
+                curr = curr->next;
+            }
+            if (!found) {
+                cout << name<<" are not in the lists." << endl; // Display this message if no tenants are found matching the filter criteria
+                
             }
             cout << endl;
         }
