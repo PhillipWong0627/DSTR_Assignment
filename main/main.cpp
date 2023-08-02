@@ -268,7 +268,13 @@ void adminmenu()
     cout << "5. Log Out" << endl;
     cout << "Please Select" << endl;
 
-    cin >> choice;
+     while (!(cin >> choice))
+    {
+        cout << "Invalid input, please enter a number." << endl;
+        cin.clear();            // Clear the fail state of the input stream
+        cin.ignore(10000, '\n'); // Clear the input buffer
+    }
+
     do
     {
         if (choice == 1)
@@ -295,20 +301,34 @@ void adminmenu()
             cout<<endl;
             cout<< "select 1 of filter tenant with active"<<endl;
             cout<< "select 2 of filter tenant with inactive"<<endl;
-
-            cin>>input;
+            cout<<endl;
+            cout<< "select any number to exit " <<endl;
             
-            if(input ==1){
-
-                tenantList.diplayFilter("active");
-
-            }else if(input ==2){
-                tenantList.diplayFilter("inactive");
-                
+            
+            while (!(cin >> input))
+            {
+                cout << "Invalid input, please enter a number." << endl;
+                cin.clear();            // Clear the fail state of the input stream
+                cin.ignore(10000, '\n'); // Clear the input buffer
             }
 
-            adminmenu();
+            do{
+                if(input == 1){
 
+                    tenantList.diplayFilter("active");
+                    adminmenu();
+
+                }else if(input == 2){
+                    tenantList.diplayFilter("inactive");
+                    adminmenu();
+                    
+                }else
+                {
+                    cout << "Exiting" << endl;
+                    adminmenu();
+                }
+
+            }while (input<0 || input >3);
         }
         else if (choice == 4)
         {
@@ -328,7 +348,7 @@ void adminmenu()
             break;
         }
 
-    } while (choice < 0 || choice > 6);
+    } while ( choice < 0 || choice > 6);
 }
 void registermanager()
 {
