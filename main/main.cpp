@@ -500,22 +500,13 @@ void searchPorperty()
     int choice;
     cout << "Searching" << endl;
     cout << "1. Ads ID" << endl;
-    cout << "2. Property Name" << endl;
-    cout << "3. Completion Year" << endl;
-    cout << "4. Monthly Rent" << endl;
-    cout << "5. Location" << endl;
-    cout << "6. Property Type" << endl;
-    cout << "7. Rooms" << endl;
-    cout << "8. Parking" << endl;
-    cout << "9. Bathroom" << endl;
-    cout << "10. Size" << endl;
-    cout << "11. Furnished" << endl;
-    cout << "12. Facilities" << endl;
-    cout << "13. Additional Facilities" << endl;
-    cout << "14. Back to Main Menu" << endl;
+    cout << "2. Monthly Rent" << endl;
+    cout << "3. Location" << endl;
+    cout << "4. Size" << endl;
+    cout << "5. Back to Main Menu" << endl;
     cout << "Please select: ";
     cin >> choice;
-    while (cin.fail() || choice < 1 || choice > 14)
+    while (cin.fail() || choice < 1 || choice > 5)
     {
         system("cls");
         cin.clear();
@@ -524,27 +515,18 @@ void searchPorperty()
         cout << endl;
         cout << "Searching" << endl;
         cout << "1. Ads ID" << endl;
-        cout << "2. Property Name" << endl;
-        cout << "3. Completion Year" << endl;
-        cout << "4. Monthly Rent" << endl;
-        cout << "5. Location" << endl;
-        cout << "6. Property Type" << endl;
-        cout << "7. Rooms" << endl;
-        cout << "8. Parking" << endl;
-        cout << "9. Bathroom" << endl;
-        cout << "10. Size" << endl;
-        cout << "11. Furnished" << endl;
-        cout << "12. Facilities" << endl;
-        cout << "13. Additional Facilities" << endl;
-        cout << "14 Back to Main Menu" << endl;
+        cout << "2. Monthly Rent" << endl;
+        cout << "3. Location" << endl;
+        cout << "4. Size" << endl;
+        cout << "5. Back to Main Menu" << endl;
         cout << "Please select: ";
         cin >> choice;
     }
-    if (choice > 1 || choice < 13)
+    if (choice > 1 || choice < 4)
     {
         searchDetails(choice);
     }
-    else if (choice == 14)
+    else if (choice == 5)
     {
         system("cls");
         cout << "Back to Main Menu!" << endl;
@@ -571,12 +553,12 @@ void searchDetails(int choice)
         displaySortedPropertyIdInPages(data, 1000);
     }
 
-    if (choice == 2 || choice == 3 || choice == 5 || choice == 6 || choice == 7 || choice == 8 || choice == 9 || choice == 11 || choice == 12 || choice == 13)
+    if (choice == 3)
     {
         cout << "Enter the property details: ";
         cin >> targetProperty;
     }
-    else if (choice == 4)
+    else if (choice == 2)
     {
         cout << "Enter the property details: ";
         cin >> targetProperty;
@@ -596,12 +578,21 @@ void searchDetails(int choice)
         }
         targetProperty = "RM " + result + " per month";
     }
-    else if (choice == 10)
+    else if (choice == 4)
     {
         cout << "Enter the property details: ";
         cin >> targetProperty;
         targetProperty = targetProperty + " sq.ft.";
     }
+    else if (choice == 5)
+    {
+        system("cls");
+        cout << "Back to Main Menu!" << endl;
+        return;
+    }
+
+    // Record start time
+    auto start = std::chrono::high_resolution_clock::now();
 
     // Assuming you have read the CSV file and stored the data in the 'data' vector
     string targetName = targetProperty; // Specify the name you want to search for
@@ -621,6 +612,13 @@ void searchDetails(int choice)
         }
     }
 
+    // Record end time
+    auto end = std::chrono::high_resolution_clock::now();
+
+    // Calculate the duration in milliseconds
+    //auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    auto duration = chrono::duration<double>(end - start).count();
+
     // Display the stored matching rows
     cout << "Rows containing the name '" << targetName << "':" << endl;
     for (const auto &row : matchingRows)
@@ -632,6 +630,9 @@ void searchDetails(int choice)
         cout << endl;
         cout << string(50, '-') << endl;
     }
+
+    // Display the execution time
+    std::cout << "Execution time: " << duration << " seconds" << std::endl;
 
     char choices;
     cout << "Do you want to add to favorite? (y/n): ";
