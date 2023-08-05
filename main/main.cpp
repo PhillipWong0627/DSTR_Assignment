@@ -503,10 +503,11 @@ void searchPorperty()
     cout << "2. Monthly Rent" << endl;
     cout << "3. Location" << endl;
     cout << "4. Size" << endl;
-    cout << "5. Back to Main Menu" << endl;
+    cout << "5. Sorted Search AdsID" << endl;
+    cout << "6. Back to Main Menu" << endl;
     cout << "Please select: ";
     cin >> choice;
-    while (cin.fail() || choice < 1 || choice > 5)
+    while (cin.fail() || choice < 1 || choice > 6)
     {
         system("cls");
         cin.clear();
@@ -518,15 +519,16 @@ void searchPorperty()
         cout << "2. Monthly Rent" << endl;
         cout << "3. Location" << endl;
         cout << "4. Size" << endl;
-        cout << "5. Back to Main Menu" << endl;
+        cout << "5. Sorted Search AdsID" << endl;
+        cout << "6. Back to Main Menu" << endl;
         cout << "Please select: ";
         cin >> choice;
     }
-    if (choice > 1 || choice < 4)
+    if (choice > 1 || choice < 5)
     {
         searchDetails(choice);
     }
-    else if (choice == 5)
+    else if (choice == 6)
     {
         system("cls");
         cout << "Back to Main Menu!" << endl;
@@ -550,7 +552,8 @@ void searchDetails(int choice)
 
     if(choice == 1)
     {
-        displaySortedPropertyIdInPages(data, 1000);
+        cout << "Enter the propertyid: ";
+        cin >> targetProperty;
     }
 
     if (choice == 3)
@@ -585,6 +588,10 @@ void searchDetails(int choice)
         targetProperty = targetProperty + " sq.ft.";
     }
     else if (choice == 5)
+    {
+        displaySortedPropertyIdInPages(data, 1000);
+    }
+    else if (choice == 6)
     {
         system("cls");
         cout << "Back to Main Menu!" << endl;
