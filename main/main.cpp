@@ -59,6 +59,7 @@ TenantList tenantList;
 Manager manager;
 SortFunction sortFunction;
 SearchFunction searchFunction;
+ManagerArray managerArray;
 
 int main()
 {
@@ -123,8 +124,12 @@ void mainMenu()
             }
 		}
 		else if (choice == 3)
-		{
-			loginManager();
+		{   
+
+            if(managerArray.managerLogin() == true)
+            {
+                manager.managerMenu();
+            }
 		}
 		else if (choice == 4)
 		{
@@ -279,7 +284,17 @@ void adminmenu()
     {
         if (choice == 1)
         {
-            registermanager();
+            // registermanager();
+
+            manager.managerRegister();
+            if(managerArray.usernameExists(manager.name)){
+                cout << "Username existed, Please Register with other name. " << endl;
+            }
+            else{
+                managerArray.insertAtEnd(manager.name, manager.password, manager.status);
+                managerArray.displayAll();
+            }
+
             adminmenu();
         }
         else if (choice == 2)

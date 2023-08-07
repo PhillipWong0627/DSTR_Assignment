@@ -20,11 +20,25 @@ public:
     // DoublyLinkedList<Tenant> tenantList;
     string name;
     string password;
-    string status;
-    
-    
+    string status = "active";
 
-    
+    void managerRegister()
+    {
+        //Dynamic Array, enter manager name
+        //int *arrayName = new ArrayList<Intger>;
+        //
+
+        // string name, password;
+        // string status = "active";
+
+        cout << "Enter ManagerName: " << endl;
+        cin >> name;
+        cout << "Enter Password: " << endl; 
+        cin >> password;
+
+    }
+
+
     void managerMenu()
     {
         
@@ -114,18 +128,121 @@ public:
         }
     }
 
-    // bool managerLogin(string username, string password)
-    // {
-
-    //     if (username == "Tee" && password == "123")
-    //     {
-
-    //         return true;
-    //     }
-
-    //     return false;
-    // }
 };
+
+
+class ManagerArray{
+    private:
+        Manager *managerArray;
+        int capacity;
+        int size;
+
+    public:
+        ManagerArray(){
+            capacity = 10; //Set an initial capacity for the arary
+            size = 0;
+            managerArray = new Manager[capacity];
+        }
+
+        ~ManagerArray(){
+            //free allocated memory
+            delete[] managerArray; 
+        }
+
+        void insertAtEnd(const std::string& name, const std::string& password, const std::string& status){
+
+            // check if the array need to be resized to add new elemenet
+            if(size == capacity){
+                capacity *= 2;
+                Manager *tempArray = new Manager[capacity];
+                for(int i =0;i<size;i++){
+
+                    tempArray[i]= managerArray[i];
+                }
+                delete[] managerArray;
+                managerArray = tempArray;
+
+            }
+
+            Manager newManager;
+            newManager.name = name;
+            newManager.password = password;
+            newManager.status = status;
+            managerArray[size] = newManager;
+            size++;
+
+        }
+        
+        void displayAll(){
+            cout << "--- DISPLAY ALL REGISTERED MANAGERS ---" << endl;
+            for(int i =0; i < size; i++){
+                cout << "Manager " << i +1 << " - Name: " << managerArray[i].name
+                    << ", Password: " << managerArray[i].password
+                    << ", Status: " <<  managerArray[i].status << endl;
+
+            }
+
+        }
+
+        bool managerLogin(){
+            
+            string name, password;
+            cout << "Manager Login" << endl;
+        
+            cout << "Enter your Manager Name (Enter 3 to exit): " << endl;
+            cin >> name;
+
+            if(name == "3")
+            {
+                cout << "Existing " << endl;
+                return false;
+            }
+            cout << "Enter your password" << endl;
+            cin >> password;
+
+            bool loggedInSuccessfully = false;
+
+            for(int i =0; i< size; i++){
+                if(managerArray[i].name == name && managerArray[i].password == password)
+                {
+                    cout << "Login succesful! " << endl;
+                    cout << "Welcome, Mr./Ms. " << name << endl;
+                    loggedInSuccessfully = true;
+                    
+                    return true;
+                    break;
+
+                }
+
+            }
+            if(!loggedInSuccessfully)
+            {
+                cout << "Login failed. Manager not found or incorrect credentials." << endl;
+            }
+
+            return false;
+
+        }
+
+        bool usernameExists(const string &name) const
+        {
+            for(int i=0; i <size; i ++)
+            {
+                if(managerArray[i].name == name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        int getSize() const{
+            return size;
+        }
+
+};
+
+
 
 #endif 
 
