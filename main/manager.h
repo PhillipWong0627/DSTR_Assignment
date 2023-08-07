@@ -7,6 +7,9 @@
 
 using namespace std;
 
+//Function prototype
+void deleteInactiveTenants();
+
 /*Defining the tenantList VARIABLE - 
 Allocate Memory for the tenantList*/
 
@@ -26,10 +29,7 @@ public:
     {
         //Dynamic Array, enter manager name
         //int *arrayName = new ArrayList<Intger>;
-        //
 
-        // string name, password;
-        // string status = "active";
 
         cout << "Enter ManagerName: " << endl;
         cin >> name;
@@ -54,11 +54,12 @@ public:
             cout << "3. Delete tenant accounts baed on inactivity status" << endl;
             cout << "4. Manage Tenancy Process" << endl;
             cout << "5. Manage Payment" << endl;
-            cout << "6. Logout" << endl;
+            cout << "6. Modify Tenant Status" << endl;
+            cout << "7. Logout" << endl;
             cout << "Please select: ";
             cin >> choice;
 
-            while (cin.fail() || choice < 1 || choice > 6)
+            while (cin.fail() || choice < 1 || choice > 7)
             {
                 system("cls");
                 cin.clear();
@@ -70,7 +71,8 @@ public:
                 cout << "3. Delete tenant accounts baed on inactivity status" << endl;
                 cout << "4. Manage Tenancy Process" << endl;
                 cout << "5. Manage Payment" << endl;
-                cout << "6. Logout" << endl;
+                cout << "6. Modify Tenant Status" << endl;
+                cout << "7. Logout" << endl;
                 cout << "Please select: ";
                 cin >> choice;
             }
@@ -109,6 +111,7 @@ public:
             else if (choice == 3)
             {
                 cout << "Delete tenant account based on inactivity status" << endl;
+                deleteInactiveTenants();
 
             }
             else if (choice == 4)
@@ -121,12 +124,55 @@ public:
             }
             else if (choice == 6)
             {
+                cout << "6. Enter the name to change the status" << endl;
+                string tenantName, newStatus;
+                cout << "Enter Tenant Name: " << endl;
+                cin >> tenantName;
+                newStatus = "inactive";
+
+                bool updated = tenantList.updateTenantStatus(tenantName, newStatus);
+                if(updated){
+                    cout << "Tenant status updated successfully!" << endl;
+                }else{
+                    cout << "Tenant not found. Status update failed!" << endl;
+                }
+                
+            }else if (choice == 7)
+            {
                 system("cls");
                 cout << "Logout successfully!" << endl;
                 return;
             }
         }
     }
+
+    void deleteInactiveTenants()
+    {
+        int deletedCount = 0;
+
+        DoublyNode<Tenant>* current = tenantList.tenantList.head;
+        while (current != nullptr) {
+            if (current->data.status == "inactive") {
+                DoublyNode<Tenant>* toDelete = current;
+                current = current->next;
+
+                // Delete the node from the list
+                tenantList.tenantList.deleteNode(toDelete);
+                deletedCount++;
+            } else {
+                current = current->next;
+            }
+        }
+
+        if (deletedCount > 0) {
+            cout << "Deleted " << deletedCount << " inactive tenant account(s)." << endl;
+        } else {
+            cout << "No inactive tenant accounts found for deletion." << endl;
+        }
+
+    }
+
+
 
 };
 

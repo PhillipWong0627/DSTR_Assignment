@@ -157,6 +157,35 @@ class DoublyLinkedList
             }
             cout << "------------------------" << endl;
         }
+
+        void deleteNode(DoublyNode<T>* nodeToDelete) {
+        if (nodeToDelete == nullptr) {
+            return;
+        }
+
+        if (nodeToDelete == head) {
+            head = head->next;
+        }
+
+        if (nodeToDelete == tail) {
+            tail = tail->prev;
+        }
+
+        if (nodeToDelete->prev != nullptr) {
+            nodeToDelete->prev->next = nodeToDelete->next;
+        }
+
+        if (nodeToDelete->next != nullptr) {
+            nodeToDelete->next->prev = nodeToDelete->prev;
+        }
+
+        delete nodeToDelete;
+        size--;
+    }
+
+
+
+
     };
 
 // Add a new class to represent the Tenant with username and password
@@ -275,7 +304,24 @@ public:
             current = current->next;
         }
         return nullptr;
-    }  
+    }
+
+    bool updateTenantStatus(const string &username, const string & newStatus)
+    {
+        DoublyNode<Tenant> * current = tenantList.head;
+        while(current != nullptr)
+        {
+            if(current->data.username == username){
+                current->data.status = newStatus;
+                return true; //Tenant found and status updated
+            }
+            current = current->next;
+        }
+        return false;
+    }
+
+
+
 
 
 };
