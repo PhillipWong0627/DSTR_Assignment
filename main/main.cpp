@@ -133,7 +133,7 @@ void mainMenu()
 		}
 		else if (choice == 4)
 		{
-			adminmenu();
+			loginAdmin();
 		}
 		else if (choice == 5)
 		{
@@ -236,7 +236,7 @@ void loginAdmin()
 
     cout << "Enter your admin name" << endl;
     cin >> name;
-
+    cout << endl;
     if (name == "3")
     {
         cout << "Exiting" << endl;
@@ -256,7 +256,7 @@ void loginAdmin()
     else
     {
         cout << endl
-             << "Welcome" << name << endl;
+             << "Welcome " << name << endl;
         adminmenu();
     }
 }
@@ -265,7 +265,7 @@ void adminmenu()
 {
     int choice;
     string name;
-    
+    cout << endl;
     cout << "1. Add New Manager" << endl;
     cout << "2. Modify Manager Status" << endl;
     cout << "3. Display Tenants" << endl;
