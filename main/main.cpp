@@ -350,9 +350,44 @@ void adminmenu()
             }while (input<0 || input >3);
         }
         else if (choice == 4)
-        {
+        {   int input;
+            cout<<endl;
+            cout<< "select 1 of filter Property with approve"<<endl;
+            cout<< "select 2 of filter Property with pending"<<endl;
+            cout<< "select 3 of filter Property with rented"<<endl;
             
-           
+            cout<<endl;
+            cout<< "select any number to exit " <<endl;
+            
+            
+            while (!(cin >> input))
+            {
+                cout << "Invalid input, please enter a number." << endl;
+                cin.clear();            // Clear the fail state of the input stream
+                cin.ignore(10000, '\n'); // Clear the input buffer
+            }
+
+            do{
+                if(input == 1){
+                    propertyList.displayStatus("","approve");
+                    
+                    adminmenu();
+
+                }else if(input == 2){
+                    propertyList.displayStatus("","pending");
+                    adminmenu();
+                    
+                }else if(input == 3){
+                    propertyList.displayStatus("","rented");
+                    adminmenu();
+                    
+                }else
+                {
+                    cout << "Exiting" << endl;
+                    adminmenu();
+                }
+
+            }while (input<0 || input >4);
             break;
         }
         else if (choice == 5)
