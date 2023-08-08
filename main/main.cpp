@@ -298,17 +298,14 @@ void adminmenu()
             adminmenu();
         }
         else if (choice == 2)
-        {   
+        {   string input;
             cout<<endl<< " Managers list "<<endl;
-            if(managerlist.showForwardandvalidate()== true){
-                cout<<endl<< " Enter the name to change the status "<<endl;
-                cin>>name;
-                managerlist.changestatus(name);
-                adminmenu();
-            }else{
-                adminmenu();
-            }
-            
+            cout<< " Enter name to change status  "<<endl;
+            managerArray.displayAll();
+            cin>>input;
+            managerArray.changestatus(input);
+            cout <<endl;
+            adminmenu();
             
         }
         else if (choice == 3)

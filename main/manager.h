@@ -229,6 +229,25 @@ class ManagerArray{
             }
 
         }
+        void changestatus(const string &name){
+            cout << " "<<endl;
+            for(int i =0; i<size ; i++){
+                if(managerArray[i].name ==name){
+                    if(managerArray[i].status=="active"){
+                        managerArray[i].status="inactive";
+                    }else{
+                        managerArray[i].status = "active";
+                    }
+                    cout <<managerArray[i].name<< "-> Current Status =" << managerArray[i].status<< endl;
+
+                    return;
+                }
+            }
+            cout<<"Name not Existed"<<endl;
+            
+            return;
+
+        }
 
         bool managerLogin(){
             
