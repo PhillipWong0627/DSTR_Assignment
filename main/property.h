@@ -1,4 +1,11 @@
+#ifndef PROPERTY_H
+#define PROPERTY_H
+
 #include <iostream>
+#include <string>
+#include <map>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -8,6 +15,14 @@ struct PropertyInfo {
     string userid;
     string status;
     int rentPrice;
+
+
+    friend std::ostream& operator<<(std::ostream& os, const PropertyInfo& property) {
+        os << "AdsID: " << property.adsid << ", Ads Details: " << property.ads_ids << ", Tenant: " << property.userid
+           << ", Monthly Rent: " << property.rentPrice << ", Status: " << property.status;
+        return os;
+    }
+
 };
 
 template <class T>
@@ -164,4 +179,56 @@ public:
         return false;
     }
 
+    void showForward()
+    {
+        Property<PropertyInfo> *curr = head;
+        cout << "\n--- DISPLAY LINKED LIST [FORWARD] = " << size << " elements ---" << endl;
+
+        while(curr != nullptr)
+        {
+            cout << curr->data << " ";
+            curr = curr->next;
+        }
+
+        cout << endl;
+    }
+
+    void generateTopFavoritesReport() const
+    {
+        // Count the occurrences of each property (ads_id) in the list
+        map<string, int> propertyCount;
+        Property<PropertyInfo> *current = head;
+        while (current != nullptr)
+        {
+            if (current->data.status == "Favorited")
+            {
+                propertyCount[current->data.adsid]++;
+            }
+            current = current->next;
+        }
+
+        // Create a vector of pairs for sorting
+        vector<pair<string, int>> sortedProperties(propertyCount.begin(), propertyCount.end());
+        // Sort the vector in descending order based on counts
+        sort(sortedProperties.begin(), sortedProperties.end(), [](const pair<string, int> &a, const pair<string, int> &b) {
+            return a.second > b.second;
+        });
+
+        // Display the top 10 favorite properties along with their counts
+        cout << "\n--- TOP 10 FAVORITE PROPERTIES ---" << endl;
+        int count = 0;
+        for (const auto &entry : sortedProperties)
+        {
+            if (count >= 10)
+            {
+                break;
+            }
+            cout << "AdsID: " << entry.first << ", Favorite Count: " << entry.second << endl;
+            count++;
+        }
+        cout << "-----------------------------------" << endl;
+    }
+
 };
+
+#endif // PROPERTY_H

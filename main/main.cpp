@@ -985,11 +985,16 @@ string inputadsid() {
 }
 
 void changeApprove() {
+propertyList.displayStatus("hiisme","pending");
+
 string targetElemet = inputadsid();
 propertyList.changeStatus(targetElemet, "approve");
 }
 
 void changeRented() {
+propertyList.displayStatus("hiisme","waiting");
+
+
 string targetElemet = inputadsid();
 propertyList.changeStatus(targetElemet, "rented");
 }

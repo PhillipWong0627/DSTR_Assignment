@@ -4,6 +4,7 @@
 #include <iostream>
 #include <limits>
 #include "tenant.h"
+#include "property.h"
 
 using namespace std;
 
@@ -14,6 +15,7 @@ void deleteInactiveTenants();
 Allocate Memory for the tenantList*/
 
 extern TenantList tenantList;
+extern PropertyList propertyList;
 
 class Manager
 {
@@ -52,14 +54,15 @@ public:
             cout << "1. Display all registered tenant' details" << endl;
             cout << "2. Search tenant's details" << endl;
             cout << "3. Delete tenant accounts baed on inactivity status" << endl;
-            cout << "4. Manage Tenancy Process" << endl;
-            cout << "5. Manage Payment" << endl;
-            cout << "6. Modify Tenant Status" << endl;
-            cout << "7. Logout" << endl;
+            cout << "4. Settlement Report" << endl;
+            cout << "5. Manage Tenancy Process" << endl;
+            cout << "6. Manage Payment" << endl;
+            cout << "7. Modify Tenant Status" << endl;
+            cout << "8. Logout" << endl;
             cout << "Please select: ";
             cin >> choice;
 
-            while (cin.fail() || choice < 1 || choice > 7)
+            while (cin.fail() || choice < 1 || choice > 8)
             {
                 system("cls");
                 cin.clear();
@@ -69,10 +72,11 @@ public:
                 cout << "1. Display all registered tenant' details" << endl;
                 cout << "2. Search tenant's details" << endl;
                 cout << "3. Delete tenant accounts baed on inactivity status" << endl;
-                cout << "4. Manage Tenancy Process" << endl;
-                cout << "5. Manage Payment" << endl;
-                cout << "6. Modify Tenant Status" << endl;
-                cout << "7. Logout" << endl;
+                cout << "4. Settlement Report" << endl;
+                cout << "5. Manage Tenancy Process" << endl;
+                cout << "6. Manage Payment" << endl;
+                cout << "7. Modify Tenant Status" << endl;
+                cout << "8. Logout" << endl;
                 cout << "Please select: ";
                 cin >> choice;
             }
@@ -116,15 +120,22 @@ public:
             }
             else if (choice == 4)
             {
-                cout << "Manage Tenancy Process" << endl;
+                cout << "==========Summarize top 10 property==========" << endl;
+                propertyList.generateTopFavoritesReport();
             }
             else if (choice == 5)
             {
-                cout << "5. Manage Payment" << endl;
+                cout << "Manage Tenancy Process" << endl;
+
             }
             else if (choice == 6)
             {
-                cout << "6. Enter the name to change the status" << endl;
+                cout << "6. Manage Payment" << endl;
+
+            }
+            else if (choice == 7)
+            {
+                cout << "7. Enter the name to change the status" << endl;
                 string tenantName, newStatus;
                 cout << "Enter Tenant Name: " << endl;
                 cin >> tenantName;
@@ -137,7 +148,7 @@ public:
                     cout << "Tenant not found. Status update failed!" << endl;
                 }
                 
-            }else if (choice == 7)
+            }else if (choice == 8)
             {
                 system("cls");
                 cout << "Logout successfully!" << endl;
