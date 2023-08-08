@@ -243,7 +243,7 @@ public:
     bool loginTenant(const string& username, const string& password) {
         DoublyNode<Tenant>* current = tenantList.head;
         while (current != nullptr) {
-            if (current->data.username == username && current->data.password == password) {
+            if (current->data.username == username && current->data.password == password && current->data.status == "active") {
                 //cout << "Login successful!" << endl;
                 return true;
             }
