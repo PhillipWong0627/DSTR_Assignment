@@ -116,6 +116,21 @@ public:
                 }
             }
         }
+        else if (searchKey == "hiisme"){
+            if (current->data.status == statusKey){
+                found = true;
+                cout << string(50, '-') << endl;
+                cout << "Status for adsid/userid: " << searchKey << endl;
+                cout << "AdsID: " << current->data.adsid << endl;
+                cout << "Ads Details: " << current->data.ads_ids << endl;
+                cout << "Tenant: " << current->data.userid << endl;
+                cout << "Monthly Rent: " << current->data.rentPrice << endl;
+                cout << "Status: " << current->data.status << endl;
+                cout << string(50, '-') << endl;
+            } 
+                
+            
+        }
         current = current->next;
     }
 
