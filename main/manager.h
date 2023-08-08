@@ -229,9 +229,30 @@ class ManagerArray{
             }
 
         }
+        bool checkdisplayall() {
+        if (size == 0) {
+            cout << "No managers registered." << endl;
+            return false;
+        }
+
+        cout << "--- DISPLAY ALL REGISTERED MANAGERS ---" << endl;
+        for (int i = 0; i < size; i++) {
+            cout << "Manager " << i + 1 << " - Name: " << managerArray[i].name
+                << ", Password: " << managerArray[i].password
+                << ", Status: " << managerArray[i].status << endl;
+        }
+        
+        return true;
+    }
+        
         void changestatus(const string &name){
             cout << " "<<endl;
+            if(name=="3"){
+                cout << "Exiting";
+                return;
+            }
             for(int i =0; i<size ; i++){
+                
                 if(managerArray[i].name ==name){
                     if(managerArray[i].status=="active"){
                         managerArray[i].status="inactive";

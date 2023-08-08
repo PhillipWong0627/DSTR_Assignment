@@ -299,13 +299,20 @@ void adminmenu()
         }
         else if (choice == 2)
         {   string input;
-            cout<<endl<< " Managers list "<<endl;
-            cout<< " Enter name to change status  "<<endl;
-            managerArray.displayAll();
-            cin>>input;
-            managerArray.changestatus(input);
-            cout <<endl;
-            adminmenu();
+            if(managerArray.checkdisplayall()==true){
+                cout<<endl<< " Managers list "<<endl;
+                cout<< " enter '3' to exit  "<<endl;
+                managerArray.displayAll();
+                cout<<endl<< " Enter name to change status  "<<endl;
+                cin>>input;
+                managerArray.changestatus(input);
+                cout <<endl;
+                adminmenu();
+            }else{
+                cout <<endl;
+                adminmenu();
+            }
+            
             
         }
         else if (choice == 3)
