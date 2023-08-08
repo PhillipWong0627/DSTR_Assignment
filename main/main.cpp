@@ -369,16 +369,16 @@ void adminmenu()
 
             do{
                 if(input == 1){
-                    propertyList.displayStatus("","approve");
+                    propertyList.displayStatus("hiisme","approve");
                     
                     adminmenu();
 
                 }else if(input == 2){
-                    propertyList.displayStatus("","pending");
+                    propertyList.displayStatus("hiisme","pending");
                     adminmenu();
                     
                 }else if(input == 3){
-                    propertyList.displayStatus("","rented");
+                    propertyList.displayStatus("hiisme","rented");
                     adminmenu();
                     
                 }else

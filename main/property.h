@@ -116,7 +116,7 @@ public:
                 }
             }
         }
-        else{
+        else if (searchKey == "hiisme"){
             if (current->data.status == statusKey){
                 found = true;
                 cout << string(50, '-') << endl;
