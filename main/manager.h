@@ -10,6 +10,8 @@ using namespace std;
 
 //Function prototype
 void deleteInactiveTenants();
+void changeApprove();
+void changeRented();
 
 /*Defining the tenantList VARIABLE - 
 Allocate Memory for the tenantList*/
@@ -125,13 +127,19 @@ public:
             }
             else if (choice == 5)
             {
-                cout << "Manage Tenancy Process" << endl;
+                cout << "==========Manage Tenancy Process==========" << endl;
+                //Displaying all pending for approved 
+                // propertyList.displayStatus("hiisme", "pending");
+
+                //Choose which advId and Tenant to approve.
+                changeApprove();
 
             }
             else if (choice == 6)
             {
-                cout << "6. Manage Payment" << endl;
+                cout << "==========Manage Payment==========" << endl;
 
+                changeRented();
             }
             else if (choice == 7)
             {
@@ -156,6 +164,12 @@ public:
             }
         }
     }
+
+    void generatePaymentReport(const string &ads_id)
+    {
+        cout << "==========GENERATING PAYMENT REPORT==========" << endl;
+    }
+
 
     void deleteInactiveTenants()
     {

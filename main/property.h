@@ -135,6 +135,7 @@ public:
             if (current->data.status == statusKey){
                 found = true;
                 cout << string(50, '-') << endl;
+                //cout << "Status for adsid/userid: " << searchKey << endl;
                 cout << "Status for adsid/userid: " << searchKey << endl;
                 cout << "AdsID: " << current->data.adsid << endl;
                 cout << "Ads Details: " << current->data.ads_ids << endl;
@@ -179,6 +180,26 @@ public:
         return false;
     }
 
+    bool managerchangeStatus(const string& adsid, const string& user_id, const string& newStatus) {
+        Property<PropertyInfo>* current = head;
+        while (current != nullptr) {
+            if (current->data.adsid == adsid && current->data.userid == user_id) {
+                current->data.status = newStatus;
+                //cout << "Status for adsid " << adsid << " updated to: " << newStatus << endl;
+                cout << "AdsID: " << current->data.adsid << endl;
+                cout << "Ads Details: " << current->data.ads_ids << endl;
+                cout << "Tenant: " << current->data.userid << endl;
+                cout << "Monthly Rent: " << current->data.rentPrice << endl;
+                cout << "Status: " << current->data.status << endl;
+                cout << string(50, '-') << endl;
+                return true;
+            }
+            current = current->next;
+        }
+        cout << "AdsID not found! Status not updated." << endl;
+        return false;
+    }
+
     void showForward()
     {
         Property<PropertyInfo> *curr = head;
@@ -191,6 +212,32 @@ public:
         }
 
         cout << endl;
+    }
+
+    void displayAll() const {
+        Property<PropertyInfo> *curr = head;
+        bool found = false;
+
+        cout << "--- DISPLAY ALL FAVOURITE LIST ---" << endl;
+        while(curr != nullptr)
+        {
+
+            cout << "Ads ID: " << curr->data.adsid << endl;
+            cout << "Ads Details: " <<  curr->data.ads_ids << endl;
+            cout << "Monthly Rent: " << curr->data.rentPrice << endl;
+            cout << "Tenant: " << curr->data.userid << endl;
+            cout << "Status: " << curr->data.status << endl;
+
+            found = true;
+            curr = curr->next;
+        }
+
+        if(!found)
+        {
+            cout <<"No tenants registered!" << endl; // Display this message if no tenants are registered
+        }
+        cout << endl;
+
     }
 
     void generateTopFavoritesReport() const

@@ -985,10 +985,15 @@ string inputadsid() {
 }
 
 void changeApprove() {
-propertyList.displayStatus("hiisme","pending");
 
-string targetElemet = inputadsid();
-propertyList.changeStatus(targetElemet, "approve");
+    propertyList.displayStatus("hiisme","pending");
+
+    string targetElemet = inputadsid();
+    string TargetUserID;
+    cout << "Enter the UserID: ";
+    cin >> TargetUserID;
+    propertyList.managerchangeStatus(targetElemet, TargetUserID, "approve");
+
 }
 
 void changeRented() {
@@ -996,7 +1001,11 @@ propertyList.displayStatus("hiisme","waiting");
 
 
 string targetElemet = inputadsid();
-propertyList.changeStatus(targetElemet, "rented");
+string TargetUserID;
+cout << "Enter the UserID: ";
+cin >> TargetUserID;
+
+propertyList.managerchangeStatus(targetElemet, TargetUserID, "rented");
 }
 
 void makePayment() {
