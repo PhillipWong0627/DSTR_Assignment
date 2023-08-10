@@ -7,14 +7,14 @@ class SortFunction
 public:
     SortFunction()
     {
-        cout << "Sort Function Object is Constructing." << endl
-             << endl;
+        // cout << "Sort Function Object is Constructing." << endl
+        //      << endl;
     }
 
     ~SortFunction()
     {
-        cout << "Sort Function Object is Deconstructing." << endl
-             << endl;
+        // cout << "Sort Function Object is Deconstructing." << endl
+        //      << endl;
     }
 
     void BubbleSortRentalFee(vector<vector<string> >& data, chrono::high_resolution_clock::time_point& start_time, chrono::high_resolution_clock::time_point& end_time);

@@ -7,12 +7,12 @@ class SearchFunction
     public:
     SearchFunction()
     {
-        cout << "Search Function Object is Constructing." << endl
-             << endl;
+        // cout << "Search Function Object is Constructing." << endl
+        //      << endl;
     };
     ~SearchFunction(){
-        cout << "Search Function Object is Deconstructing." << endl
-             << endl;
+        // cout << "Search Function Object is Deconstructing." << endl
+        //      << endl;
     };
     int LinearSearch(int arrayToBeSearch[], int arraySize, int searchValue);
 
