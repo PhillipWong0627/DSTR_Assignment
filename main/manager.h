@@ -165,12 +165,6 @@ public:
         }
     }
 
-    void generatePaymentReport(const string &ads_id)
-    {
-        cout << "==========GENERATING PAYMENT REPORT==========" << endl;
-    }
-
-
     void deleteInactiveTenants()
     {
         int deletedCount = 0;
@@ -266,9 +260,8 @@ class ManagerArray{
                 << ", Password: " << managerArray[i].password
                 << ", Status: " << managerArray[i].status << endl;
         }
-        
         return true;
-    }
+        }
         
         void changestatus(const string &name){
             cout << " "<<endl;
@@ -285,18 +278,15 @@ class ManagerArray{
                         managerArray[i].status = "active";
                     }
                     cout <<managerArray[i].name<< "-> Current Status =" << managerArray[i].status<< endl;
-
                     return;
                 }
             }
             cout<<"Name not Existed"<<endl;
-            
             return;
 
         }
 
         bool managerLogin(){
-            
             string name, password;
             cout << "Manager Login" << endl;
         
@@ -310,7 +300,6 @@ class ManagerArray{
             }
             cout << "Enter your password" << endl;
             cin >> password;
-
             bool loggedInSuccessfully = false;
 
             for(int i =0; i< size; i++){
@@ -322,7 +311,6 @@ class ManagerArray{
                     
                     return true;
                     break;
-
                 }
 
             }
@@ -350,10 +338,6 @@ class ManagerArray{
         int getSize() const{
             return size;
         }
-
 };
-
-
-
 #endif 
 

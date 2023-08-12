@@ -1,5 +1,0 @@
-userName;password;name;age
-ADM001;111;Admin1;35
-ADM002;222;Admin2;31
-ADM003;333;Admin3;44
-ADM004;444;Admin4;56

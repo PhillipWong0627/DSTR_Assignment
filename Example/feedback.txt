@@ -1,9 +1,0 @@
-feedbackID;userName;message;reply;sendDate;replyDate
-FDB001;CUS002;Hello my naasd;-;2/2/2023;-
-FDB002;CUS003;Hello my friend;Welcome...;3/2/2023;4/5/2023
-FDB003;CUS001;friend;GF...;3/2/2023;4/5/2023
-FDB004;CUS001;How are you?;-;1/5/2023;-
-FDB005;CUS002;QQQ;KUKUKU...;2/5/2023;4/5/2023
-FDB006;CUS001;Whatsapp?;-;3/5/2023;-
-FDB999;CUS001;NIcholas;YYT;10/5/2023;10/5/2023
-FDB888;CUS001;suqi;YyTao;10/5/2023;10/5/2023
