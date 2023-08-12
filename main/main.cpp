@@ -54,7 +54,7 @@ void changeRented();
 
 PropertyList propertyList;
 DoublyLinkedList<string> favList;
-ManagerLinkedList<string> managerlist;
+// ManagerLinkedList<string> managerlist;
 TenantList tenantList;
 Manager manager;
 SortFunction sortFunction;
@@ -270,7 +270,7 @@ void adminmenu()
     cout << "5. Log Out" << endl;
     cout << "Please Select" << endl;
 
-     while (!(cin >> choice))
+    while (!(cin >> choice))
     {
         cout << "Invalid input, please enter a number." << endl;
         cin.clear();            // Clear the fail state of the input stream
@@ -401,28 +401,28 @@ void adminmenu()
 
     } while ( choice < 0 || choice > 6);
 }
-void registermanager()
-{
-    string name, pass;
-    string status = "active";
-    cout << "Enter Username" << endl;
-    cin >> name;
-    cout << "Enter Password" << endl;
-    cin >> pass;
-    if (managerlist.validate(name) == true)
-    {
-        managerlist.insertAtEnd(name, pass, status);
-        cout << endl
-             << "Manager successfully inserted" << endl;
-    }
-    else
-    {
-        cout << endl
-             << "Same name existed" << endl;
-    }
+// void registermanager()
+// {
+//     string name, pass;
+//     string status = "active";
+//     cout << "Enter Username" << endl;
+//     cin >> name;
+//     cout << "Enter Password" << endl;
+//     cin >> pass;
+//     if (managerlist.validate(name) == true)
+//     {
+//         managerlist.insertAtEnd(name, pass, status);
+//         cout << endl
+//              << "Manager successfully inserted" << endl;
+//     }
+//     else
+//     {
+//         cout << endl
+//              << "Same name existed" << endl;
+//     }
 
-    managerlist.showForward();
-}
+//     managerlist.showForward();
+// }
 
 void tenantMenu()
 {
