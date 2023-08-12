@@ -175,9 +175,6 @@ void regCustomer()
         return;
     }
 
-    /////////////////////////////////////////////////////////double check/////////////////////////////////////////////
-    //tenantList.registerTenant(username, password, "active");
-    //tenantList.displayAll();
 
 }
 
@@ -196,34 +193,34 @@ string loginTenant()
     return "";
 }
 
-void loginManager()
-{
-    string name = "";
-    string pass = "";
-    cout << "Manager pages (Enter 3 to Exits this pages)" << endl
-         << endl;
+// void loginManager()
+// {
+//     string name = "";
+//     string pass = "";
+//     cout << "Manager pages (Enter 3 to Exits this pages)" << endl
+//          << endl;
 
-    cout << "Enter your Manager name" << endl;
-    cin >> name;
+//     cout << "Enter your Manager name" << endl;
+//     cin >> name;
 
     
-    if (name == "3")
-    {
-        cout << "Exiting" << endl;
-        return;
-    }
-    cout << "Enter your passcode" << endl;
-    cin >> pass;
+//     if (name == "3")
+//     {
+//         cout << "Exiting" << endl;
+//         return;
+//     }
+//     cout << "Enter your passcode" << endl;
+//     cin >> pass;
 
-    if(managerlist.validatemanager(name,pass)==true){
-        cout<<"Welcome "<< name << endl;
-        manager.managerMenu();
-    }else{
-        cout<<" Invalid Credentials or Ur Account Has Been Disabled " << endl;
-    }
+//     if(managerlist.validatemanager(name,pass)==true){
+//         cout<<"Welcome "<< name << endl;
+//         manager.managerMenu();
+//     }else{
+//         cout<<" Invalid Credentials or Ur Account Has Been Disabled " << endl;
+//     }
 
 
-}
+// }
 
 void loginAdmin()
 {
