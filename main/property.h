@@ -106,7 +106,7 @@ public:
                 cout << "Status: " << current->data.status << endl;
                 cout << string(50, '-') << endl;
             }
-            else if (current->data.status == statusKey && current->data.userid == searchKey) {
+            else if (current->data.status == statusKey) {
                 found = true;
                 cout << string(50, '-') << endl;
                 cout << "Status for adsid/userid: " << searchKey << endl;

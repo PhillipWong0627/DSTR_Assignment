@@ -852,7 +852,7 @@ void saveFavorite(){
     }
 
     if (foundFavorite) {
-        propertyList.displayStatus(ads_id, "Favorited");
+        propertyList.displayStatus(currentUsername, "Favorited");
         cout << string(50, '-') << endl;
         cout << "Add successfully " << endl;
         cout << string(50, '-') << endl;
@@ -940,7 +940,7 @@ void pendingRent() {
     cout << "Upload successful! Please wait for approval on it!" << std::endl;
     cout << string(50, '-') << endl;
 
-    propertyList.changeStatus(ads_id, "pending");
+    propertyList.managerchangeStatus(ads_id, currentUsername, "pending");
     cout << string(50, '-') << endl;
 }
 
@@ -1031,7 +1031,7 @@ void makePayment() {
         if (choice == 'n' || choice == 'N') {
             return;
         } else if (choice == 'y' || choice == 'Y') {
-            propertyList.changeStatus(targetElemet, "waiting");
+            propertyList.managerchangeStatus(targetElemet, currentUsername, "waiting");
             return;
         } else {
             cout << "Invalid choice. Please enter 'y' or 'n'." << endl;
