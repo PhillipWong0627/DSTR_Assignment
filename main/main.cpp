@@ -889,7 +889,7 @@ void placeRent() {
 
     string targetElemet = inputadsid();
 
-    bool foundProperty = propertyList.displayStatus(targetElemet, "Favorited");
+    bool foundProperty = propertyList.seconddisplayStatus(targetElemet, currentUsername, "Favorited");
 
     if (foundProperty) {
         // Ask the user if they want to see more entries
@@ -946,7 +946,7 @@ void displayFavorite() {
 
     string targetElemet = inputadsid();
 
-    propertyList.displayStatus(targetElemet, "Favorited");
+    propertyList.seconddisplayStatus(targetElemet, currentUsername, "Favorited");
 }
 
 
@@ -1011,7 +1011,7 @@ void makePayment() {
     if (foundProperty) {
         string targetElemet = inputadsid();
 
-        propertyList.displayStatus(targetElemet, "approve");
+        propertyList.seconddisplayStatus(targetElemet, currentUsername, "approve");
 
         cout << string(50, '-') << endl;
         cout << "Please bank in to this account:" << endl;

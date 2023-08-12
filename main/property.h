@@ -159,6 +159,78 @@ public:
     return found; // Return true if the property was found, false otherwise
 }
 
+    bool seconddisplayStatus(const string& searchKey, const string& user_id, const string& statusKey) const {
+    Property<PropertyInfo>* current = head;
+    bool found = false;
+
+    while (current != nullptr) {
+        if (current->data.adsid == searchKey || current->data.userid == searchKey) {
+            if (current->data.status == "approve" && current->data.userid == user_id) {
+                found = true;
+                cout << string(50, '-') << endl;
+                cout << "Status for adsid/userid: " << searchKey << endl;
+                cout << "AdsID: " << current->data.adsid << endl;
+                cout << "Ads Details: " << current->data.ads_ids << endl;
+                cout << "Tenant: " << current->data.userid << endl;
+                cout << "Deposit: " << current->data.rentPrice * 2 << endl;
+                cout << "Monthly Rent: " << current->data.rentPrice << endl;
+                cout << "Total Pay 2Month + 1Month: " << current->data.rentPrice * 3 << endl;
+                cout << "Status: " << current->data.status << endl;
+                cout << string(50, '-') << endl;
+            }
+            else if (current->data.status == statusKey && current->data.userid == user_id) {
+                found = true;
+                cout << string(50, '-') << endl;
+                cout << "Status for adsid/userid: " << searchKey << endl;
+                cout << "AdsID: " << current->data.adsid << endl;
+                cout << "Ads Details: " << current->data.ads_ids << endl;
+                cout << "Tenant: " << current->data.userid << endl;
+                cout << "Monthly Rent: " << current->data.rentPrice << endl;
+                cout << "Status: " << current->data.status << endl;
+                cout << string(50, '-') << endl;
+            }
+            else if (statusKey == "displayall"){
+                if (current->data.status != "Favorited" && current->data.userid == user_id) {
+                    found = true;
+                    cout << string(50, '-') << endl;
+                    cout << "Status for adsid/userid: " << searchKey << endl;
+                    cout << "AdsID: " << current->data.adsid << endl;
+                    cout << "Ads Details: " << current->data.ads_ids << endl;
+                    cout << "Tenant: " << current->data.userid << endl;
+                    cout << "Monthly Rent: " << current->data.rentPrice << endl;
+                    cout << "Status: " << current->data.status << endl;
+                    cout << string(50, '-') << endl;
+                }
+            }
+        }
+        else if (searchKey == "hiisme"){
+            if (current->data.status == statusKey){
+                found = true;
+                cout << string(50, '-') << endl;
+                //cout << "Status for adsid/userid: " << searchKey << endl;
+                cout << "Status for adsid/userid: " << searchKey << endl;
+                cout << "AdsID: " << current->data.adsid << endl;
+                cout << "Ads Details: " << current->data.ads_ids << endl;
+                cout << "Tenant: " << current->data.userid << endl;
+                cout << "Monthly Rent: " << current->data.rentPrice << endl;
+                cout << "Status: " << current->data.status << endl;
+                cout << string(50, '-') << endl;
+            } 
+                
+            
+        }
+        current = current->next;
+    }
+
+    if (!found) {
+        cout << string(50, '-') << endl;
+        cout << "No properties found for adsid/userid: " << searchKey << endl;
+        cout << string(50, '-') << endl;
+    }
+
+    return found; // Return true if the property was found, false otherwise
+}
+
 
     bool changeStatus(const string& adsid, const string& newStatus) {
         Property<PropertyInfo>* current = head;
